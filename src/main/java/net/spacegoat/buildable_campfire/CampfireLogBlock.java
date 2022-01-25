@@ -8,6 +8,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -72,13 +73,19 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack playerItem = player.getStackInHand(hand);
-        if (playerItem.getItem() == Items.COAL || playerItem.getItem() == Items.CHARCOAL && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().campfireBlock.enableCampfireLog){
-            replace(state, Blocks.CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().campfireBlock.campfireIsLitWhenBuild), world, pos, 0);
-            playerItem.decrement(ModConfig.getConfig().campfireBlock.howMuchCoalBuildingCampfireTakes);
+        if (playerItem.getItem() == Items.COAL || playerItem.getItem() == Items.CHARCOAL && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().CampfireBlock.enableCampfireLog){
+            replace(state, Blocks.CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild), world, pos, 0);
+            player.playSound(SoundEvents.BLOCK_ROOTED_DIRT_PLACE, 0.5f, 0.5f);
+            if (!player.isCreative()){
+                playerItem.decrement(ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireTakes);
+            }
         }
-        if (playerItem.getItem() == Blocks.SOUL_SAND.asItem() && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().soulCampfireBlock.enableSoulCampfireLog){
-            replace(state, Blocks.SOUL_CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().soulCampfireBlock.soulCampfireIsLitWhenBuild), world, pos, 0);
-            playerItem.decrement(ModConfig.getConfig().soulCampfireBlock.howMuchCoalBuildingSoulCampfireTakes);
+        if (playerItem.getItem() == Blocks.SOUL_SAND.asItem() && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().SoulCampfireBlock.enableSoulCampfireLog){
+            replace(state, Blocks.SOUL_CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild), world, pos, 0);
+            player.playSound(SoundEvents.BLOCK_SOUL_SAND_PLACE, 0.5f, 0.5f);
+            if (!player.isCreative()){
+                playerItem.decrement(ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireTakes);
+            }
         }
         return ActionResult.SUCCESS;
     }

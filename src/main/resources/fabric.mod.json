@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Buildable Campfire",
-  "description": "Deletes the Campfire Block recipes from the game and adds a new block called Campfire Log. You can place 4 Campfire Logs one after another and left click with a coal to create a unlit Campfire Block.",
+  "description": "Deletes the Campfire Block recipes from the game and adds a new block called Campfire Log. You can place 4 Campfire Logs one after another. If you left click with a Coal or Charcoal, it will turn into a Campfire Block. If you left click with a Soul Sand, it will turn into a Soul Campfire Block.",
   "authors": [
     "spacegoat3"
   ],

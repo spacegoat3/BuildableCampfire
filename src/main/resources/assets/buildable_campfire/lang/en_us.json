@@ -1,0 +1,18 @@
+{
+  "block.buildable_campfire.campfire_log": "Campfire Log",
+
+  "text.autoconfig.buildable_campfire.title": "Buildable Campfire Config",
+  "text.autoconfig.buildable_campfire.category.default": "Gameplay",
+  "text.autoconfig.buildable_campfire.category.campfire_block": "Campfire Block",
+  "text.autoconfig.buildable_campfire.category.soul_campfire_block": "Soul Campfire Block",
+
+  "text.autoconfig.buildable_campfire.option.Gameplay.deleteCampfireBlockRecipes": "No Campfire Block Recipes",
+  "text.autoconfig.buildable_campfire.option.Gameplay.enableCampfireLogDrops": "Campfire Log Drops",
+  "text.autoconfig.buildable_campfire.option.Gameplay.campfireLogLuminance": "Campfire Log Luminance",
+  "text.autoconfig.buildable_campfire.option.CampfireBlock.enableCampfireLog": "Campfire Log Block",
+  "text.autoconfig.buildable_campfire.option.CampfireBlock.campfireIsLitWhenBuild": "Campfire Final State",
+  "text.autoconfig.buildable_campfire.option.CampfireBlock.howMuchCoalBuildingACampfireTakes": "Coal/Charcoal Cost",
+  "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.enableSoulCampfireLog": "Soul Campfire Log Block",
+  "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.soulCampfireIsLitWhenBuild": "Campfire Final State",
+  "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireTakes": "Soul Sand Cost"
+}
