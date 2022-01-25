@@ -11,6 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -21,6 +22,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.spacegoat.buildable_campfire.config.ModConfig;
 
 public class CampfireLogBlock extends Block implements Waterloggable {
     public CampfireLogBlock(Settings settings){
@@ -70,11 +72,16 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack playerItem = player.getStackInHand(hand);
-        if (playerItem.getItem() == Items.COAL || playerItem.getItem() == Items.CHARCOAL && state.get(CAMPFIRE_LOGS).equals(4)){
-            replace(state, Blocks.CAMPFIRE.getDefaultState(), world, pos, 0);
+        if (playerItem.getItem() == Items.COAL || playerItem.getItem() == Items.CHARCOAL && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().campfireBlock.enableCampfireLog){
+            replace(state, Blocks.CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().campfireBlock.campfireIsLitWhenBuild), world, pos, 0);
+            playerItem.decrement(ModConfig.getConfig().campfireBlock.howMuchCoalBuildingCampfireTakes);
+        }
+        if (playerItem.getItem() == Blocks.SOUL_SAND.asItem() && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().soulCampfireBlock.enableSoulCampfireLog){
+            replace(state, Blocks.SOUL_CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().soulCampfireBlock.soulCampfireIsLitWhenBuild), world, pos, 0);
+            playerItem.decrement(ModConfig.getConfig().soulCampfireBlock.howMuchCoalBuildingSoulCampfireTakes);
         }
         return ActionResult.SUCCESS;
-        }
+    }
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return Block.sideCoversSmallSquare(world, pos.down(), Direction.UP);

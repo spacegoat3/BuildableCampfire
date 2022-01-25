@@ -18,4 +18,21 @@ public class ModConfig implements ConfigData {
         }
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }
+
+    @ConfigEntry.Gui.TransitiveObject
+    public CampfireBlock campfireBlock = new CampfireBlock();
+    @ConfigEntry.Gui.TransitiveObject
+    @ConfigEntry.Category("soul_campfire_block")
+    public SoulCampfireBlock soulCampfireBlock = new SoulCampfireBlock();
+
+    public static class CampfireBlock{
+        public boolean enableCampfireLog = true;
+        public boolean campfireIsLitWhenBuild = false;
+        public int howMuchCoalBuildingCampfireTakes = 1;
+    }
+    public static class SoulCampfireBlock{
+        public boolean enableSoulCampfireLog = true;
+        public boolean soulCampfireIsLitWhenBuild = false;
+        public int howMuchCoalBuildingSoulCampfireTakes = 1;
+    }
 }
