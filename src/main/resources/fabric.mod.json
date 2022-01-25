@@ -1,16 +1,16 @@
 {
   "schemaVersion": 1,
-  "id": "id",
+  "id": "buildable_campfire",
   "version": "${version}",
 
-  "name": "Example",
-  "description": "",
+  "name": "Buildable Campfire",
+  "description": "Deletes the Campfire Block recipes from the game and adds a new block called Campfire Log. You can place 4 Campfire Logs one after another and left click with a coal to create a unlit Campfire Block.",
   "authors": [
     "spacegoat3"
   ],
   "contact": {
-    "homepage": "https://github.com/spacegoat3/",
-    "issues": "https://github.com/spacegoat3/"
+    "homepage": "https://github.com/spacegoat3/BuildableCampfire",
+    "issues": "https://github.com/spacegoat3/BuildableCampfire/issues"
   },
 
   "license": "MIT",
@@ -19,18 +19,15 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.spacegoat.id.ModMain"
+      "net.spacegoat.buildable_campfire.ModMain"
     ],
     "modmenu": [
-      "net.spacegoat.id.config.ModMenuIntegration"
+      "net.spacegoat.buildable_campfire.config.ModMenuIntegration"
     ],
     "client": [
-      "net.spacegoat.id.ModClient"
+      "net.spacegoat.buildable_campfire.ModClient"
     ]
   },
-  "mixins": [
-    "id.mixins.json"
-  ],
 
   "depends": {
     "fabricloader": ">=0.11.3",

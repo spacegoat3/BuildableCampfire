@@ -1,11 +1,11 @@
-package net.spacegoat.id.config;
+package net.spacegoat.buildable_campfire.config;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import net.spacegoat.id.ModMain;
+import net.spacegoat.buildable_campfire.ModMain;
 
 @Config(name = ModMain.MOD_ID)
 public class ModConfig implements ConfigData {

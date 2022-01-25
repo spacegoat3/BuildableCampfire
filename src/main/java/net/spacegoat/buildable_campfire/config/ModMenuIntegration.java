@@ -1,4 +1,4 @@
-package net.spacegoat.id.config;
+package net.spacegoat.buildable_campfire.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

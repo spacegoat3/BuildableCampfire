@@ -1,0 +1,27 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"textures": {
+		"7": "block/campfire_log"
+	},
+	"elements": [
+		{
+			"name": "1",
+			"from": [11, 0, 0],
+			"to": [15, 4, 16],
+			"faces": {
+				"north": {"uv": [0, 4, 4, 8], "texture": "#7", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 4], "texture": "#7"},
+				"south": {"uv": [0, 4, 4, 8], "texture": "#7", "cullface": "south"},
+				"west": {"uv": [16, 0, 0, 4], "texture": "#7"},
+				"up": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#7"},
+				"down": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#7", "cullface": "down"}
+			}
+		}
+	],
+	"display": {
+		"head": {
+			"translation": [0, 10.5, 0]
+		}
+	}
+}

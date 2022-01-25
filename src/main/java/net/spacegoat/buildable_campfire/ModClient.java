@@ -1,4 +1,4 @@
-package net.spacegoat.id;
+package net.spacegoat.buildable_campfire;
 
 import net.fabricmc.api.ClientModInitializer;
 
