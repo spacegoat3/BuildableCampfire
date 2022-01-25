@@ -23,9 +23,6 @@
     ],
     "modmenu": [
       "net.spacegoat.buildable_campfire.config.ModMenuIntegration"
-    ],
-    "client": [
-      "net.spacegoat.buildable_campfire.ModClient"
     ]
   },
 
