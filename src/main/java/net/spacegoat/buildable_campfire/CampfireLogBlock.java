@@ -1,25 +1,31 @@
 package net.spacegoat.buildable_campfire;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.block.Waterloggable;
+import net.minecraft.block.*;
+import net.minecraft.entity.ai.pathing.NavigationType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 
 public class CampfireLogBlock extends Block implements Waterloggable {
     public CampfireLogBlock(Settings settings){
         super(settings);
+        this.setDefaultState((BlockState)((BlockState)((BlockState)((BlockState)((BlockState)this.getStateManager().getDefaultState().with(WATERLOGGED, false).with(CAMPFIRE_LOGS, 1))))));
     }
     public static final int MAX_LOGS = 4;
     public static final IntProperty CAMPFIRE_LOGS = IntProperty.of("campfire_logs", 1,4);
@@ -62,11 +68,22 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         }
     }
     @Override
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        ItemStack playerItem = player.getStackInHand(hand);
+        if (playerItem.getItem() == Items.COAL || playerItem.getItem() == Items.CHARCOAL && state.get(CAMPFIRE_LOGS).equals(4)){
+            replace(state, Blocks.CAMPFIRE.getDefaultState(), world, pos, 0);
+        }
+        return ActionResult.SUCCESS;
+        }
+    @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return Block.sideCoversSmallSquare(world, pos.down(), Direction.UP);
     }
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
+        World world;
+        PlayerEntity player;
+        Hand hand;
         BlockState blockState = ctx.getWorld().getBlockState(ctx.getBlockPos());
         if (blockState.isOf(this)) {
             return (BlockState)blockState.cycle(CAMPFIRE_LOGS);
@@ -92,5 +109,9 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             return Fluids.WATER.getStill(false);
         }
         return super.getFluidState(state);
+    }
+    @Override
+    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+        return false;
     }
 }

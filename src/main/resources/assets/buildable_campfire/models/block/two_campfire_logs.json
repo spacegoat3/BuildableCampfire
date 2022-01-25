@@ -1,8 +1,9 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "minecraft:block/block",
+	"parent": "block/block",
 	"textures": {
-		"7": "block/campfire_log"
+		"particle": "block/campfire_log",
+		"log": "block/campfire_log"
 	},
 	"elements": [
 		{
@@ -10,12 +11,12 @@
 			"from": [11, 0, 0],
 			"to": [15, 4, 16],
 			"faces": {
-				"north": {"uv": [0, 4, 4, 8], "texture": "#7", "cullface": "north"},
-				"east": {"uv": [0, 0, 16, 4], "texture": "#7"},
-				"south": {"uv": [0, 4, 4, 8], "texture": "#7", "cullface": "south"},
-				"west": {"uv": [16, 0, 0, 4], "texture": "#7"},
-				"up": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#7"},
-				"down": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#7", "cullface": "down"}
+				"north": {"uv": [0, 4, 4, 8], "texture": "#log", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 4], "texture": "#log"},
+				"south": {"uv": [0, 4, 4, 8], "texture": "#log", "cullface": "south"},
+				"west": {"uv": [16, 0, 0, 4], "texture": "#log"},
+				"up": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#log"},
+				"down": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#log", "cullface": "down"}
 			}
 		},
 		{
@@ -23,12 +24,12 @@
 			"from": [1, 0, 0],
 			"to": [5, 4, 16],
 			"faces": {
-				"north": {"uv": [0, 4, 4, 8], "texture": "#7", "cullface": "north"},
-				"east": {"uv": [0, 0, 16, 4], "texture": "#7"},
-				"south": {"uv": [0, 4, 4, 8], "texture": "#7", "cullface": "south"},
-				"west": {"uv": [16, 0, 0, 4], "texture": "#7"},
-				"up": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#7"},
-				"down": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#7", "cullface": "down"}
+				"north": {"uv": [0, 4, 4, 8], "texture": "#log", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 4], "texture": "#log"},
+				"south": {"uv": [0, 4, 4, 8], "texture": "#log", "cullface": "south"},
+				"west": {"uv": [16, 0, 0, 4], "texture": "#log"},
+				"up": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#log"},
+				"down": {"uv": [0, 0, 16, 4], "rotation": 90, "texture": "#log", "cullface": "down"}
 			}
 		}
 	],
