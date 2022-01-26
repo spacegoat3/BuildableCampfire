@@ -32,8 +32,10 @@ public class ModConfig implements ConfigData {
     public static class Gameplay{
         @Comment("Deletes Campfire and Soul Campfire Blocks' recipes, so you will need to build them instead.")
         public boolean deleteCampfireBlockRecipes = true;
-        @Comment("Depending on how much log it has, Campfire Log Block drops itself.")
+        @Comment("Campfire Logs Block will drop its item form depending on how much log it has.")
         public boolean enableCampfireLogDrops = true;
+        @Comment("You can use any log on a Stone Cutter to craft 2 Campfire Logs")
+        public boolean enableLogToCampfireLogRecipes = true;
         @Comment("The amount of light Campfire Log gives off to its surroundings.")
         public int campfireLogLuminance = 0;
     }

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "tag": "minecraft:logs_that_burn"
+  },
+  "result": "log_poles:poles",
+  "count": 2
+}

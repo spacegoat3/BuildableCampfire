@@ -41,6 +41,12 @@ public class ModMain implements ModInitializer {
 					MOD_ID, "campfire_log_drops"), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
 		});
 	}
+	private void campfireLogRecipes(){
+		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
+			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
+					MOD_ID, "campfire_log_recipes"), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
+		});
+	}
 
 	@Override
 	public void onInitialize() {
@@ -53,6 +59,9 @@ public class ModMain implements ModInitializer {
 		}
 		if (ModConfig.getConfig().Gameplay.enableCampfireLogDrops){
 			campfireLogDrops();
+		}
+		if (ModConfig.getConfig().Gameplay.enableLogToCampfireLogRecipes){
+			campfireLogRecipes();
 		}
 	}
 }
