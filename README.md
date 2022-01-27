@@ -1,4 +1,4 @@
-<p><img src="https://raw.githubusercontent.com/spacegoat3/BuildableCampfire/1.18/src/main/resources/icon.png" width=200>
+<p><img src="https://raw.githubusercontent.com/spacegoat3/BuildableCampfire/1.18/src/main/resources/icon.png" width=150>
 
 ## Buildable Campfire
 
