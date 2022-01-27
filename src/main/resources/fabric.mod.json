@@ -25,7 +25,9 @@
       "net.spacegoat.buildable_campfire.config.ModMenuIntegration"
     ]
   },
-
+  "mixins": [
+    "realistic_campfire.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",

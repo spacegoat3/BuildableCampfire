@@ -3,6 +3,6 @@
   "ingredient": {
     "tag": "minecraft:logs_that_burn"
   },
-  "result": "log_poles:poles",
+  "result": "buildable_campfire:campfire_log",
   "count": 2
 }

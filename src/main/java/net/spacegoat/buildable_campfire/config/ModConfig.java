@@ -19,17 +19,16 @@ public class ModConfig implements ConfigData {
         }
         return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
     }
+    @ConfigEntry.Gui.TransitiveObject
+    public Default Default = new Default();
+    public static class Default {
+        public boolean enableBuildableCampfire = true;
+    }
 
     @ConfigEntry.Gui.TransitiveObject
-    public Gameplay Gameplay = new Gameplay();
-    @ConfigEntry.Gui.TransitiveObject
-    @ConfigEntry.Category("campfire_block")
-    public CampfireBlock CampfireBlock = new CampfireBlock();
-    @ConfigEntry.Gui.TransitiveObject
-    @ConfigEntry.Category("soul_campfire_block")
-    public SoulCampfireBlock SoulCampfireBlock = new SoulCampfireBlock();
-
-    public static class Gameplay{
+    @ConfigEntry.Category("buildable_campfire")
+    public BuildableCampfire BuildableCampfire = new BuildableCampfire();
+    public static class BuildableCampfire{
         @Comment("Deletes Campfire and Soul Campfire Blocks' recipes, so you will need to build them instead.")
         public boolean deleteCampfireBlockRecipes = true;
         @Comment("Campfire Logs Block will drop its item form depending on how much log it has.")
@@ -38,19 +37,24 @@ public class ModConfig implements ConfigData {
         public boolean enableLogToCampfireLogRecipes = true;
         @Comment("The amount of light Campfire Log gives off to its surroundings.")
         public int campfireLogLuminance = 0;
-    }
-    public static class CampfireBlock{
         public boolean enableCampfireLog = true;
         @Comment("Will the Campfire Block going to be lit or unlit when you built it.")
         public boolean campfireIsLitWhenBuild = false;
         @Comment("The amount of Coal/Charcoal you will need to build a Campfire.")
         public int howMuchCoalBuildingACampfireTakes = 1;
-    }
-    public static class SoulCampfireBlock{
         public boolean enableSoulCampfireLog = true;
         @Comment("Will the Soul Campfire Block going to be lit or unlit when you built it.")
         public boolean soulCampfireIsLitWhenBuild = false;
         @Comment("The amount of Soul Sand you will need to build a Soul Campfire.")
         public int howMuchSoulSandBuildingASoulCampfireTakes = 1;
+    }
+    @ConfigEntry.Gui.TransitiveObject
+    @ConfigEntry.Category("stripped_campfires")
+    public StrippedCampfires StrippedCampfires = new StrippedCampfires();
+    public static class StrippedCampfires {
+        public boolean enableStrippedCampfire = true;
+        public boolean enableStrippedSoulCampfire = true;
+        @Comment("The amount of light Stripped Campfires gives off to their surroundings.")
+        public int strippedCampfiresLuminance = 15;
     }
 }
