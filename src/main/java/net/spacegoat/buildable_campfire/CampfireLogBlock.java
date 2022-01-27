@@ -73,18 +73,22 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack playerItem = player.getStackInHand(hand);
-        if (playerItem.getItem() == Items.COAL || playerItem.getItem() == Items.CHARCOAL && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().BuildableCampfire.enableCampfireLog){
-            replace(state, Blocks.CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().BuildableCampfire.campfireIsLitWhenBuild), world, pos, 0);
-            player.playSound(SoundEvents.BLOCK_ROOTED_DIRT_PLACE, 0.5f, 0.5f);
+        if (playerItem.getItem() == Items.COAL || playerItem.getItem() == Items.CHARCOAL && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().CampfireBlock.enableCampfireLog){
+            replace(state, Blocks.CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild), world, pos, 0);
+            if (ModConfig.getConfig().CampfireBlock.playSoundEffect){
+                player.playSound(SoundEvents.BLOCK_ROOTED_DIRT_PLACE, 0.5f, 0.5f);
+            }
             if (!player.isCreative()){
-                playerItem.decrement(ModConfig.getConfig().BuildableCampfire.howMuchCoalBuildingACampfireTakes);
+                playerItem.decrement(ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireTakes);
             }
         }
-        if (playerItem.getItem() == Blocks.SOUL_SAND.asItem() && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().BuildableCampfire.enableSoulCampfireLog){
-            replace(state, Blocks.SOUL_CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().BuildableCampfire.soulCampfireIsLitWhenBuild), world, pos, 0);
-            player.playSound(SoundEvents.BLOCK_SOUL_SAND_PLACE, 0.5f, 0.5f);
+        if (playerItem.getItem() == Blocks.SOUL_SAND.asItem() && state.get(CAMPFIRE_LOGS).equals(4) && ModConfig.getConfig().SoulCampfireBlock.enableSoulCampfireLog){
+            replace(state, Blocks.SOUL_CAMPFIRE.getDefaultState().with(Properties.LIT, ModConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild), world, pos, 0);
+            if (ModConfig.getConfig().SoulCampfireBlock.playSoundEffect){
+                player.playSound(SoundEvents.BLOCK_SOUL_SAND_PLACE, 0.5f, 0.5f);
+            }
             if (!player.isCreative()){
-                playerItem.decrement(ModConfig.getConfig().BuildableCampfire.howMuchSoulSandBuildingASoulCampfireTakes);
+                playerItem.decrement(ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireTakes);
             }
         }
         return ActionResult.SUCCESS;

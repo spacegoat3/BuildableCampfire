@@ -31,31 +31,24 @@ public class ModMain implements ModInitializer {
 				new BlockItem(block, new FabricItemSettings().group(ItemGroup.DECORATIONS)));
 	}
 
+	public static final Block CAMPFIRE_LOG =
+			new CampfireLogBlock(FabricBlockSettings.of(Material.WOOD)
+					.mapColor(Blocks.CAMPFIRE.getDefaultMapColor()).sounds(BlockSoundGroup.WOOD)
+					.strength(2.0f).breakByHand(true).luminance(ModConfig.getConfig().Gameplay.campfireLogLuminance));
+
 	@Override
 	public void onInitialize() {
-		//BLOCK REGISTRIES
-		if (ModConfig.getConfig().Default.enableBuildableCampfire) {
-			registerBlock("campfire_log", ModBlocks.CAMPFIRE_LOG);
-			registerBlockItem("campfire_log", ModBlocks.CAMPFIRE_LOG);
-		}
-		if (ModConfig.getConfig().StrippedCampfires.enableStrippedCampfire){
-			registerBlock("stripped_campfire", ModBlocks.STRIPPED_CAMPFIRE);
-			registerBlockItem("stripped_campfire", ModBlocks.STRIPPED_CAMPFIRE);
-		}
-		if (ModConfig.getConfig().StrippedCampfires.enableStrippedSoulCampfire){
-			registerBlock("stripped_soul_campfire", ModBlocks.STRIPPED_SOUL_CAMPFIRE);
-			registerBlockItem("stripped_soul_campfire", ModBlocks.STRIPPED_SOUL_CAMPFIRE);
-		}
-
+			registerBlock("campfire_log", CAMPFIRE_LOG);
+			registerBlockItem("campfire_log", CAMPFIRE_LOG);
 
 		//RESOURCE PACK REGISTRIES
-		if (ModConfig.getConfig().BuildableCampfire.deleteCampfireBlockRecipes && ModConfig.getConfig().Default.enableBuildableCampfire){
+		if (ModConfig.getConfig().Gameplay.deleteCampfireBlockRecipes){
 			noCampfireRecipes();
 		}
-		if (ModConfig.getConfig().BuildableCampfire.enableCampfireLogDrops && ModConfig.getConfig().Default.enableBuildableCampfire){
+		if (ModConfig.getConfig().Gameplay.enableCampfireLogDrops){
 			campfireLogDrops();
 		}
-		if (ModConfig.getConfig().BuildableCampfire.enableLogToCampfireLogRecipes && ModConfig.getConfig().Default.enableBuildableCampfire){
+		if (ModConfig.getConfig().Gameplay.enableLogToCampfireLogRecipes){
 			campfireLogRecipes();
 		}
 	}
