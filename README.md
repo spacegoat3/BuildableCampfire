@@ -1,3 +1,5 @@
+<p><img src="https://raw.githubusercontent.com/spacegoat3/BuildableCampfire/1.18/src/main/resources/icon.png">
+
 ## Buildable Campfire
 
 ### What is this?
