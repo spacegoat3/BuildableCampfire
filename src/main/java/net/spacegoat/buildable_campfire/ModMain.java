@@ -56,19 +56,19 @@ public class ModMain implements ModInitializer {
 	private void noCampfireRecipes() {
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
-					MOD_ID, "no_campfire_recipes"), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
+					MOD_ID, "no_campfire_recipes"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
 		});
 	}
 	private void campfireLogDrops() {
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
-					MOD_ID, "campfire_log_drops"), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
+					MOD_ID, "campfire_log_drops"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
 		});
 	}
 	private void campfireLogRecipes(){
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
-					MOD_ID, "campfire_log_recipes"), modContainer, ResourcePackActivationType.ALWAYS_ENABLED);
+					MOD_ID, "campfire_log_recipes"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
 		});
 	}
 }
