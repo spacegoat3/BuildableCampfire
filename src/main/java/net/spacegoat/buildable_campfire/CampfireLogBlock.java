@@ -1,5 +1,6 @@
 package net.spacegoat.buildable_campfire;
 
+import net.fabricmc.fabric.api.event.Event;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -70,6 +71,13 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             }
         }
     }
+
+    public void setNewState(int campfireLogs, World world, BlockPos pos, PlayerEntity player){
+        if (player.getInventory().getEmptySlot() > 0) {
+            replace(world.getBlockState(pos), ModMain.CAMPFIRE_LOG.getDefaultState().with(CAMPFIRE_LOGS, campfireLogs), world, pos, 0);
+        }
+    }
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack playerItem = player.getStackInHand(hand);
@@ -89,6 +97,24 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             }
             if (!player.isCreative()){
                 playerItem.decrement(ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireTakes);
+            }
+        }
+        if (ModConfig.getConfig().Gameplay.campfireLogsCanBePicked && playerItem.isEmpty()){
+            player.getInventory().insertStack(new ItemStack(ModMain.CAMPFIRE_LOG.asItem()));
+            if (ModConfig.getConfig().Gameplay.playSoundWhenCampfireLogGetsPicked){
+                player.playSound(SoundEvents.BLOCK_WOOD_PLACE, 1,1);
+            }
+            if (state.get(CAMPFIRE_LOGS).equals(1)){
+                world.removeBlock(pos, false);
+            }
+            if (state.get(CAMPFIRE_LOGS).equals(2)){
+                setNewState(1, world, pos, player);
+            }
+            if (state.get(CAMPFIRE_LOGS).equals(3)){
+                setNewState(2, world, pos, player);
+            }
+            if (state.get(CAMPFIRE_LOGS).equals(4)){
+                setNewState(3, world, pos, player);
             }
         }
         return ActionResult.SUCCESS;

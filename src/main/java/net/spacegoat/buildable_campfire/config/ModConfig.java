@@ -23,6 +23,10 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public Gameplay Gameplay = new Gameplay();
     public static class Gameplay{
+        @Comment("Players can pick Campfire Logs by right-clicking them with ")
+        public boolean campfireLogsCanBePicked = true;
+        @Comment("Plays a sound effect when you pick a Campfire Log.")
+        public boolean playSoundWhenCampfireLogGetsPicked = true;
         @Comment("Deletes Campfire and Soul Campfire Blocks' recipes, so you will need to build them instead.")
         public boolean deleteCampfireBlockRecipes = true;
         @Comment("Campfire Logs Block will drop its item form depending on how much log it has.")
