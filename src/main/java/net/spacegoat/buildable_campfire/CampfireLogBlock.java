@@ -14,6 +14,8 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -51,26 +53,37 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         boolean south = state.get(FACING).equals(Direction.SOUTH);
         if (state.get(CAMPFIRE_LOGS).equals(1)){
             if (west){
-                return WestShapes.ONE_LOG_WEST;
+                return WestShapes.ONE_LOG;
             }
             if (east){
-                return EastShapes.ONE_LOG_EAST;
+                return EastShapes.ONE_LOG;
             }
         }
         return super.getOutlineShape(state, world, pos, context);
     }
 
 
-    public static class WestShapes {
-        public static final VoxelShape ONE_LOG_WEST = createCuboidShape(
-                11, 0, 0, 15, 4, 16
-        );
-    }
     public static class EastShapes {
-        public static final VoxelShape ONE_LOG_EAST = createCuboidShape(
-                1, 0, 0, 5, 4, 16
+        public static final VoxelShape ONE_LOG = createCuboidShape(
+                0, 0, 11, 16, 4, 15
         );
     }
+    public static class WestShapes {
+        public static final VoxelShape ONE_LOG = createCuboidShape(
+                0, 0, 1, 16, 4, 5
+        );
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, BlockRotation rotation) {
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, BlockMirror mirror) {
+        return state.rotate(mirror.getRotation(state.get(FACING)));
+    }
+
 
     @Override
     public ActionResult onUse(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
