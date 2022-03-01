@@ -1,5 +1,12 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "ingredients": [],
-  "result": {}
+  "ingredients": [
+    {
+      "item": "minecraft:air"
+    }
+  ],
+  "result": {
+    "item": "minecraft:air",
+    "count": 0
+  }
 }
