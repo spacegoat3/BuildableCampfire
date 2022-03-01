@@ -1,23 +1,27 @@
 {
   "variants": {
-    "campfire_logs=1,west=true": [
+    "campfire_logs=1,facing=west": [
       {
-        "model": "buildable_campfire:block/west/campfire_log"
+        "model": "buildable_campfire:block/west/campfire_log",
+        "y": 270
       }
     ],
-    "campfire_logs=1,east=true": [
+    "campfire_logs=1,facing=east": [
       {
-        "model": "buildable_campfire:block/east/campfire_log"
+        "model": "buildable_campfire:block/east/campfire_log",
+        "y": 90
       }
     ],
-    "campfire_logs=2,west=true": [
+    "campfire_logs=2,facing=west": [
       {
-        "model": "buildable_campfire:block/two_horizontal_campfire_logs"
+        "model": "buildable_campfire:block/two_horizontal_campfire_logs",
+        "y": 270
       }
     ],
-    "campfire_logs=2,east=true": [
+    "campfire_logs=2,facing=east": [
       {
-        "model": "buildable_campfire:block/two_horizontal_campfire_logs"
+        "model": "buildable_campfire:block/two_horizontal_campfire_logs",
+        "y": 90
       }
     ]
   }

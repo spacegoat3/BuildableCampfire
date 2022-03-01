@@ -11,6 +11,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -34,12 +35,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     
     public static final IntProperty CAMPFIRE_LOGS = IntProperty.of("campfire_logs", 1,4);
     public static final BooleanProperty WATERLOGGED = BooleanProperty.of("waterlogged");
-
-    //Since HorizontalFacingBlock or the Direction Properties doesn't work with Campfire Log Block, we used Boolean Properties to identify directions.
-    public static final BooleanProperty FACING_EAST = BooleanProperty.of("east");
-    public static final BooleanProperty FACING_WEST = BooleanProperty.of("west");
-    public static final BooleanProperty FACING_SOUTH = BooleanProperty.of("south");
-    public static final BooleanProperty FACING_NORTH = BooleanProperty.of("north");
+    public static final DirectionProperty FACING = DirectionProperty.of("facing");
 
     public void pickLog(PlayerEntity player){
         BlockState state = this.getDefaultState();
@@ -49,53 +45,31 @@ public class CampfireLogBlock extends Block implements Waterloggable {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context){
-        boolean west = state.get(FACING_WEST).equals(true);
-        boolean east = state.get(FACING_EAST).equals(true);
-        boolean north = state.get(FACING_NORTH).equals(true);
-        boolean south = state.get(FACING_NORTH).equals(true);
+        boolean west = state.get(FACING).equals(Direction.WEST);
+        boolean east = state.get(FACING).equals(Direction.EAST);
+        boolean north = state.get(FACING).equals(Direction.NORTH);
+        boolean south = state.get(FACING).equals(Direction.SOUTH);
         if (state.get(CAMPFIRE_LOGS).equals(1)){
             if (west){
-                return WestShapes.ONE_LOG;
+                return WestShapes.ONE_LOG_WEST;
             }
-        }
-        if (state.get(CAMPFIRE_LOGS).equals(2)){
-            if (west || east){
-                return TWO_HORIZONTAL_LOGS;
-            }
-        }
-        if (state.get(CAMPFIRE_LOGS).equals(3)){
-            if (west){
-                return WestShapes.THREE_LOGS;
-            }
-        }
-        if (state.get(CAMPFIRE_LOGS).equals(4)){
-            if (west || east){
-                return FOUR_HORIZONTAL_LOGS;
+            if (east){
+                return EastShapes.ONE_LOG_EAST;
             }
         }
         return super.getOutlineShape(state, world, pos, context);
     }
 
 
-    public static final VoxelShape TWO_HORIZONTAL_LOGS = VoxelShapes.union(
-            createCuboidShape(11,0,0,15,4,16),
-            createCuboidShape(1,0,0,5,4,16)
-    );
-    public static final VoxelShape FOUR_HORIZONTAL_LOGS = VoxelShapes.union(
-            TWO_HORIZONTAL_LOGS,
-            createCuboidShape(0,3,1,16,7,5),
-            createCuboidShape(0, 3, 11, 16, 7, 15)
-    );
     public static class WestShapes {
-        public static final VoxelShape ONE_LOG = createCuboidShape(
-                11,0,0,15,4,16
-        );
-        public static final VoxelShape THREE_LOGS = VoxelShapes.union(
-                TWO_HORIZONTAL_LOGS,
-                createCuboidShape(0,3,1,16,7,5)
+        public static final VoxelShape ONE_LOG_WEST = createCuboidShape(
+                11, 0, 0, 15, 4, 16
         );
     }
     public static class EastShapes {
+        public static final VoxelShape ONE_LOG_EAST = createCuboidShape(
+                1, 0, 0, 5, 4, 16
+        );
     }
 
     @Override
@@ -165,16 +139,12 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         if (state.isOf(this)) {
             return state.cycle(CAMPFIRE_LOGS);
         }
-        return Objects.requireNonNull(super.getPlacementState(context)).with(WATERLOGGED, isNearWater(world, pos))
-                .with(FACING_EAST, playerDirection == Direction.WEST)
-                .with(FACING_WEST, playerDirection == Direction.EAST)
-                .with(FACING_NORTH, playerDirection == Direction.SOUTH)
-                .with(FACING_SOUTH, playerDirection == Direction.NORTH);
+        return this.getDefaultState().with(WATERLOGGED, isNearWater(world, pos)).with(FACING, playerDirection.getOpposite());
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(CAMPFIRE_LOGS, WATERLOGGED, FACING_WEST, FACING_EAST, FACING_NORTH, FACING_SOUTH);
+        builder.add(CAMPFIRE_LOGS, FACING, WATERLOGGED);
     }
 
     @Override
