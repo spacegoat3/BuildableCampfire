@@ -23,6 +23,74 @@
         "model": "buildable_campfire:block/two_campfire_logs",
         "y": 90
       }
+    ],
+    "campfire_logs=3,facing=west": [
+      {
+        "model": "buildable_campfire:block/three_campfire_logs",
+        "y": 270
+      }
+    ],
+    "campfire_logs=3,facing=east": [
+      {
+        "model": "buildable_campfire:block/three_campfire_logs",
+        "y": 90
+      }
+    ],
+    "campfire_logs=4,facing=west": [
+      {
+        "model": "buildable_campfire:block/four_campfire_logs",
+        "y": 270
+      }
+    ],
+    "campfire_logs=4,facing=east": [
+      {
+        "model": "buildable_campfire:block/four_campfire_logs",
+        "y": 90
+      }
+    ],
+    "campfire_logs=1,facing=north": [
+      {
+        "model": "buildable_campfire:block/campfire_log",
+        "y": 180
+      }
+    ],
+    "campfire_logs=1,facing=south": [
+      {
+        "model": "buildable_campfire:block/campfire_log"
+      }
+    ],
+    "campfire_logs=2,facing=north": [
+      {
+        "model": "buildable_campfire:block/two_campfire_logs",
+        "y": 180
+      }
+    ],
+    "campfire_logs=2,facing=south": [
+      {
+        "model": "buildable_campfire:block/two_campfire_logs"
+      }
+    ],
+    "campfire_logs=3,facing=north": [
+      {
+        "model": "buildable_campfire:block/three_campfire_logs",
+        "y": 180
+      }
+    ],
+    "campfire_logs=3,facing=south": [
+      {
+        "model": "buildable_campfire:block/three_campfire_logs"
+      }
+    ],
+    "campfire_logs=4,facing=north": [
+      {
+        "model": "buildable_campfire:block/four_campfire_logs",
+        "y": 180
+      }
+    ],
+    "campfire_logs=4,facing=south": [
+      {
+        "model": "buildable_campfire:block/four_campfire_logs"
+      }
     ]
   }
 }

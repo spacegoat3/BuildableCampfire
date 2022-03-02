@@ -9,6 +9,7 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 import net.spacegoat.buildable_campfire.ModMain;
 
 @Config(name = ModMain.MOD_ID)
+@Config.Gui.Background("minecraft:block/block/oak_log.png")
 public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.Excluded
     private transient static boolean registered = false;
@@ -40,10 +41,10 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Category("campfire_block")
     public CampfireBlock CampfireBlock = new CampfireBlock();
     public static class CampfireBlock {
-        public boolean enableCampfireLog = true;
+        public boolean enableBuildableCampfire = true;
         @Comment("Should your Campfire be lit or unlit when you build it?")
         public boolean campfireIsLitWhenBuild = false;
-        @Comment("Plays a sound effect when you right click a finished Campfire Template with a coal or charcoal.")
+        @Comment("Plays a sound effect when you right-click a finished Campfire Template with a coal or charcoal.")
         public boolean playSoundEffect = true;
         @Comment("The amount of Coal/Charcoal you will need to build a Campfire.")
         public int howMuchCoalBuildingACampfireTakes = 1;
@@ -52,10 +53,10 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Category("soul_campfire_block")
     public SoulCampfireBlock SoulCampfireBlock = new SoulCampfireBlock();
     public static class SoulCampfireBlock {
-        public boolean enableSoulCampfireLog = true;
+        public boolean enableBuildableSoulCampfire = true;
         @Comment("Should your Soul Campfire be lit or unlit when you build it?")
         public boolean soulCampfireIsLitWhenBuild = false;
-        @Comment("Plays a sound effect when you right click a finished Campfire Template with a Soul Sand.")
+        @Comment("Plays a sound effect when you right-click a finished Campfire Template with a Soul Sand.")
         public boolean playSoundEffect = true;
         @Comment("The amount of Soul Sand you will need to build a Soul Campfire.")
         public int howMuchSoulSandBuildingASoulCampfireTakes = 1;

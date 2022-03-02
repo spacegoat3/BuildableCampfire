@@ -1,6 +1,7 @@
 package net.spacegoat.buildable_campfire;
 
 import net.minecraft.block.*;
+import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -27,21 +28,21 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.spacegoat.buildable_campfire.config.ModConfig;
 
-import java.util.Objects;
-
 public class CampfireLogBlock extends Block implements Waterloggable {
     public CampfireLogBlock(Settings settings){
         super(settings);
         this.setDefaultState(this.getStateManager().getDefaultState().with(WATERLOGGED, false).with(CAMPFIRE_LOGS, 1));
     }
-    
+
     public static final IntProperty CAMPFIRE_LOGS = IntProperty.of("campfire_logs", 1,4);
     public static final BooleanProperty WATERLOGGED = BooleanProperty.of("waterlogged");
     public static final DirectionProperty FACING = DirectionProperty.of("facing");
 
     public void pickLog(PlayerEntity player){
         BlockState state = this.getDefaultState();
-        player.playSound(state.getSoundGroup().getPlaceSound(), 1, 1);
+        if (ModConfig.getConfig().Gameplay.playSoundWhenCampfireLogsGetPicked){
+            player.playSound(state.getSoundGroup().getPlaceSound(), 1, 1);
+        }
         player.getInventory().insertStack(new ItemStack(this.asItem()));
     }
 
@@ -51,26 +52,108 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         boolean east = state.get(FACING).equals(Direction.EAST);
         boolean north = state.get(FACING).equals(Direction.NORTH);
         boolean south = state.get(FACING).equals(Direction.SOUTH);
+        boolean horizontal = west || east;
+        boolean vertical = north || south;
         if (state.get(CAMPFIRE_LOGS).equals(1)){
             if (west){
-                return WestShapes.ONE_LOG;
+                return HorizontalShapes.ONE_WEST_LOG;
             }
             if (east){
-                return EastShapes.ONE_LOG;
+                return HorizontalShapes.ONE_EAST_LOG;
+            }
+            if (south){
+                return VerticalShapes.ONE_SOUTH_LOG;
+            }
+            if (north){
+                return VerticalShapes.ONE_NORTH_LOG;
+            }
+        }
+        if (state.get(CAMPFIRE_LOGS).equals(2)){
+            if (horizontal){
+                return HorizontalShapes.HORIZONTAL_TWO_LOGS;
+            }
+            if (vertical){
+                return VerticalShapes.TWO_VERTICAL_LOGS;
+            }
+        }
+        if (state.get(CAMPFIRE_LOGS).equals(3)){
+            if (west){
+                return HorizontalShapes.THREE_WEST_LOGS;
+            }
+            if (east){
+                return HorizontalShapes.THREE_EAST_LOGS;
+            }
+            if (south){
+                return VerticalShapes.THREE_SOUTH_LOGS;
+            }
+            if (north){
+                return VerticalShapes.THREE_NORTH_LOGS;
+            }
+        }
+        if (state.get(CAMPFIRE_LOGS).equals(4)){
+            if (horizontal){
+                return HorizontalShapes.HORIZONTAL_FOUR_LOGS;
+            }
+            if (vertical){
+                return VerticalShapes.FOUR_VERTICAL_LOGS;
             }
         }
         return super.getOutlineShape(state, world, pos, context);
     }
 
-
-    public static class EastShapes {
-        public static final VoxelShape ONE_LOG = createCuboidShape(
+    public static class HorizontalShapes {
+        public static final VoxelShape ONE_EAST_LOG = createCuboidShape(
                 0, 0, 11, 16, 4, 15
         );
-    }
-    public static class WestShapes {
-        public static final VoxelShape ONE_LOG = createCuboidShape(
+        public static final VoxelShape ONE_WEST_LOG = createCuboidShape(
                 0, 0, 1, 16, 4, 5
+        );
+
+        public static final VoxelShape HORIZONTAL_TWO_LOGS = VoxelShapes.union(
+                ONE_WEST_LOG,
+                ONE_EAST_LOG
+        );
+
+        public static final VoxelShape THREE_EAST_LOGS = VoxelShapes.union(
+                HORIZONTAL_TWO_LOGS,
+                createCuboidShape(11, 3, 0, 15, 7, 16)
+        );
+        public static final VoxelShape THREE_WEST_LOGS = VoxelShapes.union(
+                HORIZONTAL_TWO_LOGS,
+                createCuboidShape(1, 3, 0, 5, 7, 16)
+        );
+
+        public static final VoxelShape HORIZONTAL_FOUR_LOGS = VoxelShapes.union(
+                THREE_WEST_LOGS,
+                THREE_EAST_LOGS
+        );
+    }
+
+    public static class VerticalShapes {
+        public static final VoxelShape ONE_NORTH_LOG = createCuboidShape(
+                1, 0, 0, 5, 4, 16
+        );
+        public static final VoxelShape ONE_SOUTH_LOG = createCuboidShape(
+                11, 0, 0, 15, 4, 16
+        );
+
+        public static final VoxelShape TWO_VERTICAL_LOGS = VoxelShapes.union(
+                ONE_NORTH_LOG,
+                ONE_SOUTH_LOG
+        );
+
+        public static final VoxelShape THREE_NORTH_LOGS = VoxelShapes.union(
+                TWO_VERTICAL_LOGS,
+                createCuboidShape(0, 3, 11, 16, 7, 15)
+        );
+        public static final VoxelShape THREE_SOUTH_LOGS = VoxelShapes.union(
+                TWO_VERTICAL_LOGS,
+                createCuboidShape(0, 3, 1, 16, 7, 5)
+        );
+
+        public static final VoxelShape FOUR_VERTICAL_LOGS = VoxelShapes.union(
+                THREE_NORTH_LOGS,
+                THREE_SOUTH_LOGS
         );
     }
 
@@ -87,9 +170,9 @@ public class CampfireLogBlock extends Block implements Waterloggable {
 
     @Override
     public ActionResult onUse(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack item = player.getStackInHand(hand);
+        ItemStack item = player.getMainHandStack();
         BlockState state = blockState.with(WATERLOGGED, isNearWater(world, pos));
-        if (item.isEmpty() && ModConfig.getConfig().Gameplay.campfireLogsArePickable){
+        if (ModConfig.getConfig().Gameplay.campfireLogsArePickable && item.isEmpty() || item.isOf(this.asItem())){
             if (state.get(CAMPFIRE_LOGS).equals(1)){
                 world.removeBlock(pos, false);
                 pickLog(player);
@@ -117,25 +200,43 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             }
             return ActionResult.PASS;
         }
-        if (item.isIn(ModMain.CAMPFIRE_INGREDIENTS)){
-            makeCampfire(Blocks.CAMPFIRE, ModConfig.getConfig().CampfireBlock.playSoundEffect, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireTakes, world, pos, player, hand);
-            return ActionResult.SUCCESS;
-        }
-        if (item.isIn(ModMain.SOUL_CAMPFIRE_INGREDIENTS)){
-            makeCampfire(Blocks.SOUL_CAMPFIRE, ModConfig.getConfig().SoulCampfireBlock.playSoundEffect, SoundEvents.BLOCK_SOUL_SAND_PLACE, ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireTakes, world, pos, player, hand);
-            return ActionResult.SUCCESS;
+        if (state.get(CAMPFIRE_LOGS).equals(4)) {
+            if (ModConfig.getConfig().CampfireBlock.enableBuildableCampfire && item.isIn(ModMain.CAMPFIRE_INGREDIENTS)) {
+                makeCampfire(Blocks.CAMPFIRE, ModConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild, ModConfig.getConfig().CampfireBlock.playSoundEffect, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireTakes, world, pos, player, hand);
+                return ActionResult.SUCCESS;
+            }
+            if (ModConfig.getConfig().SoulCampfireBlock.enableBuildableSoulCampfire && item.isIn(ModMain.SOUL_CAMPFIRE_INGREDIENTS)) {
+                makeCampfire(Blocks.SOUL_CAMPFIRE, ModConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild, ModConfig.getConfig().SoulCampfireBlock.playSoundEffect, SoundEvents.BLOCK_SOUL_SAND_PLACE, ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireTakes, world, pos, player, hand);
+                return ActionResult.SUCCESS;
+            }
         }
         return ActionResult.PASS;
     }
 
-    public void makeCampfire(Block campfire, boolean playSound, SoundEvent sound, int cost, World world, BlockPos pos, PlayerEntity player, Hand hand){
-        BlockState state = campfire.getDefaultState().with(CampfireBlock.WATERLOGGED, isNearWater(world, pos));
-        world.setBlockState(pos, state.with(CampfireBlock.LIT, false));
+    public void makeCampfire(Block campfire, boolean lit, boolean playSound, SoundEvent sound, int cost, World world, BlockPos pos, PlayerEntity player, Hand hand){
+        BlockState state = campfire.getDefaultState().with(CampfireBlock.WATERLOGGED, isNearWater(world, pos)).with(CampfireBlock.FACING, facing(world.getBlockState(pos)));
+        world.setBlockState(pos, state.with(CampfireBlock.LIT, lit));
         if (playSound){
             player.playSound(sound, 1, 1);
         }
         player.playSound(state.getSoundGroup().getPlaceSound(), 1, 1);
         player.getStackInHand(hand).decrement(cost);
+    }
+
+    public Direction facing(BlockState state){
+        if (state.get(FACING).equals(Direction.SOUTH)){
+            return Direction.SOUTH;
+        }
+        if (state.get(FACING).equals(Direction.NORTH)){
+            return Direction.NORTH;
+        }
+        if (state.get(FACING).equals(Direction.EAST)){
+            return Direction.EAST;
+        }
+        if (state.get(FACING).equals(Direction.WEST)){
+            return Direction.WEST;
+        }
+        return null;
     }
 
     @Override
