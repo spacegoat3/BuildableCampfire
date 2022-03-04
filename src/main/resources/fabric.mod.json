@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Buildable Campfire",
-  "description": "Deletes the Campfire Block recipes from the game and adds a new block called Campfire Log. You can place 4 Campfire Logs one after another. If you left click with a Coal or Charcoal, it will turn into a Campfire Block. If you left click with a Soul Sand, it will turn into a Soul Campfire Block.",
+  "description": "Deletes the Campfire Block recipes from the game and adds a new block called Campfire Log. You can place 4 Campfire Logs one after another. If you left click with a Coal or Charcoal, it will turn into a Campfire Block. If you left click with a Soul Sand, it will turn into a Soul Campfire Block. You can also pick them by left clicking with an empty hand.",
   "authors": [
     "spacegoat3"
   ],
@@ -25,10 +25,20 @@
       "net.spacegoat.buildable_campfire.config.ModMenuIntegration"
     ]
   },
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "text.buildable_campfire.curseforge": "https://www.curseforge.com/minecraft/mc-mods/buildable-campfire",
+        "text.buildable_campfire.modrinth": "https://modrinth.com/mod/buildable-campfire"
+      }
+    }
+  },
+
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": ["1.17", "1.17.1", "1.18", "1.18.1"],
+    "minecraft": ["1.17", "1.17.1", "1.18", "1.18.1", "1.18.2"],
     "java": ">=16",
     "cloth-config2": ">=5.0.34"
   },

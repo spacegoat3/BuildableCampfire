@@ -1,22 +1,31 @@
 {
   "block.buildable_campfire.campfire_log": "Campfire Log",
+  "text.buildable_campfire.tooltip": "Can be placed four times to make a campfire template.",
+
+  "text.buildable_campfire.curseforge": "CurseForge Page",
+  "text.buildable_campfire.modrinth": "Modrinth Page",
 
   "text.autoconfig.buildable_campfire.title": "Buildable Campfire Config",
 
   "text.autoconfig.buildable_campfire.category.default": "Gameplay",
+  "text.autoconfig.buildable_campfire.option.Gameplay.campfireLogsArePickable": "Pickable Logs",
+  "text.autoconfig.buildable_campfire.option.Gameplay.playSoundWhenCampfireLogGetsPicked": "Play Picking Sound",
   "text.autoconfig.buildable_campfire.option.Gameplay.deleteCampfireBlockRecipes": "No Campfire Block Recipes",
   "text.autoconfig.buildable_campfire.option.Gameplay.enableCampfireLogDrops": "Campfire Log Drops",
   "text.autoconfig.buildable_campfire.option.Gameplay.enableLogToCampfireLogRecipes": "Campfire Log Recipes",
+  "text.autoconfig.buildable_campfire.option.Gameplay.enableItemTooltip": "Enable Tooltip",
+  "text.autoconfig.buildable_campfire.option.Gameplay.tooltip": "Tooltip Text",
+  "text.autoconfig.buildable_campfire.option.Gameplay.tooltipColor": "Tooltip Color",
   "text.autoconfig.buildable_campfire.option.Gameplay.campfireLogLuminance": "Campfire Log Luminance",
 
   "text.autoconfig.buildable_campfire.category.campfire_block": "Campfire Block",
-  "text.autoconfig.buildable_campfire.option.CampfireBlock.enableCampfireLog": "Buildable Campfire",
+  "text.autoconfig.buildable_campfire.option.CampfireBlock.enableBuildableCampfire": "Buildable Campfire",
   "text.autoconfig.buildable_campfire.option.CampfireBlock.campfireIsLitWhenBuild": "Final Block State",
   "text.autoconfig.buildable_campfire.option.CampfireBlock.howMuchCoalBuildingACampfireTakes": "Coal/Charcoal Cost",
   "text.autoconfig.buildable_campfire.option.CampfireBlock.playSoundEffect": "Play Sound Effect",
 
   "text.autoconfig.buildable_campfire.category.soul_campfire_block": "Soul Campfire Block",
-  "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.enableSoulCampfireLog": "Buildable Soul Campfire",
+  "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.enableBuildableSoulCampfire": "Buildable Soul Campfire",
   "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.soulCampfireIsLitWhenBuild": "Final Block State",
   "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireTakes": "Soul Sand Cost",
   "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.playSoundEffect": "Play Sound Effect"

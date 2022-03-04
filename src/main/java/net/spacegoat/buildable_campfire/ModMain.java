@@ -18,18 +18,14 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.spacegoat.buildable_campfire.config.ModConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ModMain implements ModInitializer {
 	public static final String MOD_ID = "buildable_campfire";
-	public static final Logger LOGGER = LoggerFactory.getLogger("buildable_campfire");
 
 	public static final Block CAMPFIRE_LOG =
-			new CampfireLogBlock(FabricBlockSettings.of(Material.WOOD)
+			new CampfireLogBlock(FabricBlockSettings.of(Material.WOOD).strength(Blocks.CAMPFIRE.getHardness())
 					.mapColor(Blocks.CAMPFIRE.getDefaultMapColor()).sounds(BlockSoundGroup.WOOD)
-					.strength(2.0f).breakByHand(true).luminance
-							(ModConfig.getConfig().Gameplay.campfireLogLuminance));
+					.breakByHand(true).luminance(ModConfig.getConfig().Gameplay.campfireLogLuminance));
 
 	@Override
 	public void onInitialize() {
