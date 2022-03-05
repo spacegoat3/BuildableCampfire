@@ -26,6 +26,10 @@
     ]
   },
 
+  "mixins": [
+    "buildable_campfire.mixins.json"
+  ],
+
   "custom": {
     "modmenu": {
       "links": {

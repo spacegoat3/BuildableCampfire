@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "net.spacegoat.buildable_campfire.mixins",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "AxeMixin"
+  ]
+}

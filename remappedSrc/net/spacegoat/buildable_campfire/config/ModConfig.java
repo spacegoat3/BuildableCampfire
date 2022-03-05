@@ -34,9 +34,7 @@ public class ModConfig implements ConfigData {
         public boolean deleteCampfireBlockRecipes = true;
         @Comment("Campfire Logs Block will drop its item form depending on how much log it has.")
         public boolean enableCampfireLogDrops = true;
-        public boolean enableLogChopping = true;
-        @Comment("You can make a Campfire Log using 6 Sticks.")
-        public boolean enableSticksToLogRecipes = false;
+        public boolean enableChoppingLogs = true;
         @Comment("You can use any log on a Stone Cutter to craft 2 Campfire Logs")
         public boolean enableLogToCampfireLogRecipes = true;
         @Comment("Shows a text under the item's name explaining the use of the Campfire Log.")
