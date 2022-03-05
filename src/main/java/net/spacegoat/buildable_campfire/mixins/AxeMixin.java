@@ -31,12 +31,11 @@ public class AxeMixin {
         BlockState state = world.getBlockState(pos);
         PlayerEntity player = context.getPlayer();
         ItemStack item = context.getStack();
-        BlockState upState = world.getBlockState(pos.up());
         if (player != null) {
             if (ModConfig.getConfig().Gameplay.enableLogChopping && state.isIn(BlockTags.LOGS) && player.getPose().equals(EntityPose.CROUCHING)) {
                 world.breakBlock(pos, false, player);
-                Block.dropStack(world, pos.up(), new ItemStack(ModMain.CAMPFIRE_LOG.asItem(), world.getRandom().nextInt(1, 4)));
-                item.damage(1, player, (p) -> {
+                Block.dropStack(world, pos, new ItemStack(ModMain.CAMPFIRE_LOG.asItem(), world.random.nextInt(1, 2)));
+                item.damage(15, player, (p) -> {
                     p.sendToolBreakStatus(context.getHand());
                 });
                 info.setReturnValue(ActionResult.SUCCESS);

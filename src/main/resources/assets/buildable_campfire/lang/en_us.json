@@ -17,7 +17,7 @@
   "text.autoconfig.buildable_campfire.option.Gameplay.tooltip": "Tooltip Text",
   "text.autoconfig.buildable_campfire.option.Gameplay.tooltipColor": "Tooltip Color",
   "text.autoconfig.buildable_campfire.option.Gameplay.campfireLogLuminance": "Campfire Log Luminance",
-  "text.autoconfig.buildable_campfire.option.Gameplay.enableChoppingLogs": "Enable Log Chopping",
+  "text.autoconfig.buildable_campfire.option.Gameplay.enableLogChopping": "Enable Log Chopping",
 
   "text.autoconfig.buildable_campfire.category.campfire_block": "Campfire Block",
   "text.autoconfig.buildable_campfire.option.CampfireBlock.enableBuildableCampfire": "Buildable Campfire",
