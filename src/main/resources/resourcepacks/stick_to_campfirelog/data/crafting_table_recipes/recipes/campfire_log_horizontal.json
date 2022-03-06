@@ -10,7 +10,7 @@
     }
   },
   "result": {
-    "item": "minecraft:oak_wood",
+    "item": "buildable_campfire:campfire_log",
     "count": 1
   }
 }

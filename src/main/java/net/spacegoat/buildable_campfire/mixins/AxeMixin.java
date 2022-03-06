@@ -5,14 +5,16 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.Items;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.spacegoat.buildable_campfire.CampfireLogBlock;
 import net.spacegoat.buildable_campfire.ModMain;
 import net.spacegoat.buildable_campfire.config.ModConfig;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,18 +32,55 @@ public class AxeMixin {
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
         PlayerEntity player = context.getPlayer();
-        ItemStack item = context.getStack();
         if (player != null) {
             if (ModConfig.getConfig().Gameplay.enableLogChopping && state.isIn(BlockTags.LOGS) && player.getPose().equals(EntityPose.CROUCHING)) {
                 world.breakBlock(pos, false, player);
                 Block.dropStack(world, pos, new ItemStack(ModMain.CAMPFIRE_LOG.asItem(), world.random.nextInt(1, 2)));
-                item.damage(15, player, (p) -> {
-                    p.sendToolBreakStatus(context.getHand());
-                });
+                damage(15, context);
+                info.setReturnValue(ActionResult.SUCCESS);
+            }
+            if (ModConfig.getConfig().Gameplay.enableCampfireLogChopping && state.isOf(ModMain.CAMPFIRE_LOG) && player.getPose().equals(EntityPose.CROUCHING)){
+                damage(10, context);
+                chopCampfireLogs(context);
                 info.setReturnValue(ActionResult.SUCCESS);
             }
         } else {
             info.setReturnValue(ActionResult.PASS);
+        }
+    }
+
+    private void damage(int damage, ItemUsageContext context) {
+        PlayerEntity player = context.getPlayer();
+        if (player != null) {
+            context.getStack().damage(damage, player, (p) -> {
+                p.sendToolBreakStatus(context.getHand());
+            });
+        }
+    }
+
+    private void chopCampfireLogs(ItemUsageContext context){
+        World world = context.getWorld();
+        BlockPos pos = context.getBlockPos();
+        IntProperty logs = CampfireLogBlock.CAMPFIRE_LOGS;
+        BlockState state = world.getBlockState(pos);
+        ItemStack sticks = new ItemStack(Items.STICK, 6);
+        if (state.get(logs).equals(1)){
+            world.removeBlock(pos, false);
+        }
+        if (state.get(logs).equals(2)){
+            world.setBlockState(pos, state.with(logs, 1));
+        }
+        if (state.get(logs).equals(3)){
+            world.setBlockState(pos, state.with(logs, 2));
+        }
+        if (state.get(logs).equals(4)){
+            world.setBlockState(pos, state.with(logs, 3));
+        }
+        world.addBlockBreakParticles(pos, state);
+        Block.dropStack(world, pos, Direction.UP, sticks);
+        PlayerEntity player = context.getPlayer();
+        if (player != null){
+            player.playSound(state.getSoundGroup().getBreakSound(), 1, 1);
         }
     }
 }

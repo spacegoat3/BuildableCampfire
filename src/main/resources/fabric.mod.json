@@ -8,6 +8,7 @@
   "authors": [
     "spacegoat3"
   ],
+
   "contact": {
     "homepage": "https://github.com/spacegoat3/BuildableCampfire",
     "issues": "https://github.com/spacegoat3/BuildableCampfire/issues"
@@ -46,6 +47,7 @@
     "java": ">=16",
     "cloth-config2": ">=5.0.34"
   },
+
   "suggests": {
     "another-mod": "*",
     "modmenu": "*"
