@@ -6,6 +6,10 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.spacegoat.buildable_campfire.ModMain;
 
@@ -25,24 +29,34 @@ public class ModConfig implements ConfigData {
 
     @ConfigEntry.Gui.TransitiveObject
     public Gameplay Gameplay = new Gameplay();
-    public static class Gameplay{
+    public static class Gameplay {
         @Comment("Players can pick Campfire Logs by right-clicking them with ")
         public boolean campfireLogsArePickable = true;
-        @Comment("Plays a sound effect when you pick a Campfire Log.")
+        @Comment("Plays a sound effect when players pick a Campfire Log.")
         public boolean playSoundWhenCampfireLogGetsPicked = true;
-        @Comment("Deletes Campfire and Soul Campfire Blocks' recipes, so you will need to build them instead.")
+        @ConfigEntry.Gui.RequiresRestart
+        @Comment("Deletes Campfire and Soul Campfire Blocks' recipes, so players will need to build them instead.")
         public boolean deleteCampfireBlockRecipes = true;
         @Comment("Campfire Logs Block will drop its item form depending on how much log it has.")
         public boolean enableCampfireLogDrops = true;
-        public boolean enableChoppingLogs = true;
-        @Comment("You can use any log on a Stone Cutter to craft 2 Campfire Logs")
+        @Comment("Players can gather Campfire Logs by left-clicking log or log-like them with an Axe while crouching.")
+        public boolean enableLogChopping = true;
+        @Comment("Players can turn Campfire Logs into 6 Sticks by left-clicking onto them with an Axe while crouching.")
+        public boolean enableCampfireLogChopping = true;
+        @ConfigEntry.Gui.RequiresRestart
+        @Comment("Players can make a Campfire Log using 6 Sticks.")
+        public boolean enableSticksToLogRecipes = false;
+        @ConfigEntry.Gui.RequiresRestart
+        @Comment("Players can use any log on a Stone Cutter to craft 2 Campfire Logs")
         public boolean enableLogToCampfireLogRecipes = true;
         @Comment("Shows a text under the item's name explaining the use of the Campfire Log.")
         public boolean enableItemTooltip = true;
         @Comment("The tooltip itself. Leave empty/null if you want it to be default.")
-        public String tooltip = null;
+        public String tooltip = "";
         @Comment("The color of the tooltip text.")
         public Formatting tooltipColor = Formatting.GRAY;
+        @Comment("Changes the Campfire Log's name to Firewood. (User Suggestion)")
+        public boolean changeCampfireLogName = false;
         @Comment("The amount of light Campfire Log gives off to its surroundings.")
         public int campfireLogLuminance = 0;
     }

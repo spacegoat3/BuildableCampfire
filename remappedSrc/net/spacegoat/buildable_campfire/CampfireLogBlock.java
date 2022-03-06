@@ -34,7 +34,7 @@ import java.util.List;
 public class CampfireLogBlock extends Block implements Waterloggable {
     public CampfireLogBlock(Settings settings){
         super(settings);
-        this.setDefaultState(this.getStateManager().getDefaultState().with(WATERLOGGED, false).with(CAMPFIRE_LOGS, 1));
+        this.setDefaultState(this.getStateManager().getDefaultState());
     }
 
     public static final IntProperty CAMPFIRE_LOGS = IntProperty.of("campfire_logs", 1,4);
@@ -213,7 +213,9 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             player.playSound(sound, 1, 1);
         }
         player.playSound(state.getSoundGroup().getPlaceSound(), 1, 1);
-        item.decrement(cost);
+        if (!player.isCreative()) {
+            item.decrement(cost);
+        }
     }
 
     public Direction facing(BlockState state){
@@ -254,6 +256,14 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     }
 
     @Override
+    public String getTranslationKey() {
+        if (ModConfig.getConfig().Gameplay.changeCampfireLogName){
+            return "block.buildable_campfire.campfire_log_second";
+        }
+        return "block.buildable_campfire.campfire_log";
+    }
+
+    @Override
     public BlockState getPlacementState(ItemPlacementContext context) {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
@@ -291,7 +301,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         return false;
     }
 
-    public boolean isNearWater(WorldView world, BlockPos pos){
+    public static boolean isNearWater(WorldView world, BlockPos pos){
         BlockState upState = world.getBlockState(pos.up());
         BlockState downState = world.getBlockState(pos.down());
         BlockState southState = world.getBlockState(pos.south());
@@ -302,7 +312,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     }
 
 
-    private boolean isWater(BlockState state){
+    private static boolean isWater(BlockState state){
         return state.isOf(Blocks.WATER) || state.getFluidState().isOf(Fluids.WATER);
     }
 }

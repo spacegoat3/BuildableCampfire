@@ -37,39 +37,36 @@ public class ModMain implements ModInitializer {
 
 		//RESOURCE PACK REGISTRIES
 		if (ModConfig.getConfig().Gameplay.deleteCampfireBlockRecipes){
-			noCampfireRecipes();
+			createPack("no_campfire_recipes");
 		}
 		if (ModConfig.getConfig().Gameplay.enableCampfireLogDrops){
-			campfireLogDrops();
+			createPack("campfire_log_drops");
 		}
 		if (ModConfig.getConfig().Gameplay.enableLogToCampfireLogRecipes){
-			campfireLogRecipes();
+			createPack("log_to_campfirelog");
+		}
+		if (ModConfig.getConfig().Gameplay.enableSticksToLogRecipes){
+			createPack("stick_to_campfirelog");
 		}
 	}
 
-	//RESOURCE PACKS
-	private void noCampfireRecipes() {
+	private void createPack(String id){
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
 			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
-					MOD_ID, "no_campfire_recipes"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
+					MOD_ID, id), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
 		});
 	}
-	private void campfireLogDrops() {
-		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
-			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
-					MOD_ID, "campfire_log_drops"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
-		});
-	}
-	private void campfireLogRecipes(){
-		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {
-			var added = ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
-					MOD_ID, "campfire_log_recipes"), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
-		});
+
+	public static Tag.Identified<Item> createItemTag(String id){
+		return TagFactory.ITEM.create(new Identifier(MOD_ID, id));
 	}
 
 	//TAGS
+	//If you are a developer and want your item to be used as an ingredient, you can put it to these tags.
 	public static final Tag.Identified<Item> CAMPFIRE_INGREDIENTS =
-			TagFactory.ITEM.create(new Identifier(MOD_ID, "campfire_ingredients"));
+			createItemTag("campfire_ingredients");
 	public static final Tag.Identified<Item> SOUL_CAMPFIRE_INGREDIENTS =
-			TagFactory.ITEM.create(new Identifier(MOD_ID, "soul_campfire_ingredients"));
+			createItemTag("soul_campfire_ingredients");
+	public static final Tag.Identified<Item> STICKS =
+			createItemTag("sticks");
 }
