@@ -1,5 +1,6 @@
 {
   "block.buildable_campfire.campfire_log": "Campfire Log",
+  "block.buildable_campfire.campfire_log_second": "Firewood",
   "text.buildable_campfire.tooltip": "Can be placed four times to make a campfire template.",
 
   "text.buildable_campfire.curseforge": "CurseForge Page",

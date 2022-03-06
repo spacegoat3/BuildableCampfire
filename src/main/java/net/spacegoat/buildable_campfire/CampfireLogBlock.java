@@ -15,6 +15,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.text.LiteralText;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.*;
@@ -253,6 +254,14 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return Block.sideCoversSmallSquare(world, pos.down(), Direction.UP);
+    }
+
+    @Override
+    public String getTranslationKey() {
+        if (ModConfig.getConfig().Gameplay.changeCampfireLogName){
+            return "block.buildable_campfire.campfire_log_second";
+        }
+        return "block.buildable_campfire.campfire_log";
     }
 
     @Override
