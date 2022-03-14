@@ -11,8 +11,18 @@ version = project.mod_version
 group = project.maven_group
 
 repositories {
-	maven { url "https://maven.shedaniel.me/" }
-	maven { url = "https://maven.terraformersmc.com/releases" }
+	maven {
+		url =  "https://maven.shedaniel.me/"
+	}
+	maven {
+		url = "https://maven.terraformersmc.com/releases"
+	}
+	maven {
+		url = "https://cursemaven.com"
+		content {
+			includeGroup "curse.maven"
+		}
+	}
 }
 
 dependencies {
@@ -24,6 +34,7 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+	modImplementation "curse.maven:hyper-lighting-fabric-557692:${project.hyper_lighting_version}"
 }
 
 processResources {
