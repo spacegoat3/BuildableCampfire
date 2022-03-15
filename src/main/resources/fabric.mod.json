@@ -20,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.spacegoat.buildable_campfire.BuildableCampfireMod"
+      "net.spacegoat.buildable_campfire.BuildableCampfire"
     ],
     "modmenu": [
       "net.spacegoat.buildable_campfire.config.ModMenuIntegration"

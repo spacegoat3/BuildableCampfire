@@ -4,5 +4,7 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "AxeMixin",
+    "CampfireBlockMixin"
   ]
 }
