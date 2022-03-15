@@ -34,7 +34,7 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-	modImplementation "curse.maven:hyperlighting-557692:${project.hyper_lighting_version}"
+	modImplementation "curse.maven:biomes_youll_go-391378:${project.biomes_youll_go_version}"
 }
 
 processResources {
