@@ -9,14 +9,20 @@ import net.minecraft.item.Item;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.spacegoat.buildable_campfire.config.ModConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class BuildableCampfireMod implements ModInitializer {
+public class BuildableCampfire implements ModInitializer {
 	public static final String MOD_ID = "buildable_campfire";
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {
+		CampfireLogs.registerCampfireLogs();
+		registerPacks();
+	}
 
-		//RESOURCE PACK REGISTRIES
+	private void registerPacks(){
 		if (ModConfig.getConfig().Gameplay.deleteCampfireBlockRecipes){
 			createPack("no_campfire_recipes");
 		}
