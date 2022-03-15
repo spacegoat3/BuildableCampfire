@@ -20,7 +20,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.spacegoat.buildable_campfire.ModMain"
+      "net.spacegoat.buildable_campfire.BuildableCampfireMod"
     ],
     "modmenu": [
       "net.spacegoat.buildable_campfire.config.ModMenuIntegration"
@@ -43,7 +43,7 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": ["1.17", "1.17.1", "1.18", "1.18.1"],
+    "minecraft": ["1.18", "1.18.1"],
     "java": ">=16",
     "cloth-config2": ">=5.0.34"
   },
