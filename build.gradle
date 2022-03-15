@@ -21,8 +21,7 @@ repositories {
 		url = "https://cursemaven.com"
 		content {
 			includeGroup "curse.maven"
-		}
-	}
+		}}
 }
 
 dependencies {
