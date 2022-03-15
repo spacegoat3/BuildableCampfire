@@ -14,8 +14,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.spacegoat.buildable_campfire.CampfireLogBlock;
 import net.spacegoat.buildable_campfire.CampfireLogs;
-import net.spacegoat.buildable_campfire.blocks.VanillaCampfireLogBlock;
 import net.spacegoat.buildable_campfire.config.ModConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,13 +33,13 @@ public class AxeMixin {
         BlockState state = world.getBlockState(pos);
         PlayerEntity player = context.getPlayer();
         if (player != null) {
-            if (ModConfig.getConfig().Gameplay.enableLogChopping && state.isIn(BlockTags.LOGS) && player.getPose().equals(EntityPose.CROUCHING)) {
+            if (ModConfig.getConfig().Gameplay.enableLogChopping && isLog(state) && player.getPose().equals(EntityPose.CROUCHING)) {
                 world.breakBlock(pos, false, player);
                 Block.dropStack(world, pos, new ItemStack(CampfireLogs.CAMPFIRE_LOG.asItem(), world.getRandom().nextInt(1, 3)));
                 damage(15, context);
                 info.setReturnValue(ActionResult.SUCCESS);
             }
-            if (ModConfig.getConfig().Gameplay.enableCampfireLogChopping && state.isOf(CampfireLogs.CAMPFIRE_LOG) && player.getPose().equals(EntityPose.CROUCHING)){
+            if (ModConfig.getConfig().Gameplay.enableCampfireLogChopping && state.getBlock() instanceof CampfireLogBlock && player.getPose().equals(EntityPose.CROUCHING)){
                 damage(10, context);
                 chopCampfireLogs(context);
                 info.setReturnValue(ActionResult.SUCCESS);
@@ -47,6 +47,10 @@ public class AxeMixin {
         } else {
             info.setReturnValue(ActionResult.PASS);
         }
+    }
+
+    private boolean isLog(BlockState state){
+        return state.isIn(BlockTags.LOGS);
     }
 
     private void damage(int damage, ItemUsageContext context) {
@@ -61,7 +65,7 @@ public class AxeMixin {
     private void chopCampfireLogs(ItemUsageContext context){
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
-        IntProperty logs = VanillaCampfireLogBlock.CAMPFIRE_LOGS;
+        IntProperty logs = CampfireLogBlock.CAMPFIRE_LOGS;
         BlockState state = world.getBlockState(pos);
         ItemStack sticks = new ItemStack(Items.STICK, 6);
         if (state.get(logs).equals(1)){
