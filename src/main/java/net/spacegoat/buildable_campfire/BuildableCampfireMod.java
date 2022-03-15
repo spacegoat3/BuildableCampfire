@@ -10,7 +10,7 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 import net.spacegoat.buildable_campfire.config.ModConfig;
 
-public class ModMain implements ModInitializer {
+public class BuildableCampfireMod implements ModInitializer {
 	public static final String MOD_ID = "buildable_campfire";
 
 	@Override

@@ -6,14 +6,10 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
-import net.spacegoat.buildable_campfire.ModMain;
+import net.spacegoat.buildable_campfire.BuildableCampfireMod;
 
-@Config(name = ModMain.MOD_ID)
+@Config(name = BuildableCampfireMod.MOD_ID)
 @Config.Gui.Background("minecraft:textures/block/oak_log.png")
 public class ModConfig implements ConfigData {
 
@@ -60,6 +56,13 @@ public class ModConfig implements ConfigData {
         @Comment("The amount of light Campfire Log gives off to its surroundings.")
         public int campfireLogLuminance = 0;
     }
+    @ConfigEntry.Gui.TransitiveObject
+    @ConfigEntry.Category("logs")
+    public Logs logs = new Logs();
+    public static class Logs {
+        public boolean oakLog = true;
+    }
+
     @ConfigEntry.Gui.TransitiveObject
     @ConfigEntry.Category("campfire_block")
     public CampfireBlock CampfireBlock = new CampfireBlock();
