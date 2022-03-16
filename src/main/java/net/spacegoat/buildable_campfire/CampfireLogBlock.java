@@ -137,11 +137,11 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             return ActionResult.SUCCESS;
         }
         if (state.get(CAMPFIRE_LOGS).equals(4)) {
-            if (ModConfig.getConfig().CampfireBlock.enableBuildableCampfire && item.isIn(BuildableCampfire.CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts) {
+            if (ModConfig.getConfig().CampfireBlock.enableBuildableCampfire && item.isIn(BuildableCampfireTags.CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts) {
                 makeCampfire(campfire, ModConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild, ModConfig.getConfig().CampfireBlock.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts, world, pos, player, hand);
                 return ActionResult.SUCCESS;
             }
-            if (ModConfig.getConfig().SoulCampfireBlock.enableBuildableSoulCampfire && item.isIn(BuildableCampfire.SOUL_CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts) {
+            if (ModConfig.getConfig().SoulCampfireBlock.enableBuildableSoulCampfire && item.isIn(BuildableCampfireTags.SOUL_CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts) {
                 if (soulCampfire != null) {
                     makeCampfire(soulCampfire, ModConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild, ModConfig.getConfig().SoulCampfireBlock.playSoulSandSound, SoundEvents.BLOCK_SOUL_SAND_PLACE, ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts, world, pos, player, hand);
                     return ActionResult.SUCCESS;

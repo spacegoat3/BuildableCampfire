@@ -43,17 +43,4 @@ public class BuildableCampfire implements ModInitializer {
 					MOD_ID, id), modContainer, ResourcePackActivationType.DEFAULT_ENABLED);
 		});
 	}
-
-	public static Tag.Identified<Item> createItemTag(String id){
-		return TagFactory.ITEM.create(new Identifier(MOD_ID, id));
-	}
-
-	//TAGS
-	//If you are a developer and want your item to be used as an ingredient, you can put it to these tags.
-	public static final Tag.Identified<Item> CAMPFIRE_INGREDIENTS =
-			createItemTag("campfire_ingredients");
-	public static final Tag.Identified<Item> SOUL_CAMPFIRE_INGREDIENTS =
-			createItemTag("soul_campfire_ingredients");
-	public static final Tag.Identified<Item> STICKS =
-			createItemTag("sticks");
 }
