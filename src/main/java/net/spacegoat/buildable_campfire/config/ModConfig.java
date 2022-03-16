@@ -6,6 +6,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Formatting;
 import net.spacegoat.buildable_campfire.BuildableCampfire;
 
@@ -63,7 +64,7 @@ public class ModConfig implements ConfigData {
         @Comment("Should your Campfire be lit when you build it?")
         public boolean campfireIsLitWhenBuild = false;
         @Comment("Plays a sound effect when you right-click a finished Campfire Template with a coal or charcoal.")
-        public boolean playSoundEffect = true;
+        public boolean playTuffSound = true;
         @Comment("The amount of Coal/Charcoal you will need to build a Campfire.")
         public int howMuchCoalBuildingACampfireCosts = 1;
     }
@@ -76,34 +77,49 @@ public class ModConfig implements ConfigData {
         @Comment("Should your Soul Campfire be lit when you build it?")
         public boolean soulCampfireIsLitWhenBuild = false;
         @Comment("Plays a sound effect when you right-click a finished Campfire Template with Soul Sand.")
-        public boolean playSoundEffect = true;
+        public boolean playSoulSandSound = true;
         @Comment("The amount of Soul Sand you will need to build a Soul Campfire.")
         public int howMuchSoulSandBuildingASoulCampfireCosts = 1;
     }
     @ConfigEntry.Gui.TransitiveObject
     @ConfigEntry.Category("boric_campfire_block")
-    public BoricCampfireBlockConfig BoricCampfire = new BoricCampfireBlockConfig();
+    public BoricCampfireBlockConfig BoricCampfire = BoricCampfire();
     public static class BoricCampfireBlockConfig {
         @Comment("Oh The Biomes You'll Go - Green Smoked Campfire")
         public boolean enableBuildableBoricCampfire = true;
         @Comment("Should your Boric Campfire be lit when you build it?")
         public boolean boricCampfireIsLitWhenBuild = false;
         @Comment("Plays a sound effect when you right-click a finished Campfire Template with Brim Powder.")
-        public boolean playSoundEffect = true;
+        public boolean playSandSound = true;
         @Comment("The amount of Brim Powder you will need to build a Boric Campfire.")
         public int howMuchBrimPowderBuildingABoricCampfireCosts = 1;
     }
     @ConfigEntry.Gui.TransitiveObject
     @ConfigEntry.Category("cryptic_campfire_block")
-    public CrypticCampfireBlockConfig CrypticCampfire = new CrypticCampfireBlockConfig();
+    public CrypticCampfireBlockConfig CrypticCampfire = CrypticCampfire();
     public static class CrypticCampfireBlockConfig {
         @Comment("Oh The Biomes You'll Go - Green Smoked Campfire")
         public boolean enableBuildableCrypticCampfire = true;
         @Comment("Should your Boric Campfire be lit when you build it?")
         public boolean crypticCampfireIsLitWhenBuild = false;
         @Comment("Plays a sound effect when you right-click a finished Campfire Template with Brim Powder.")
-        public boolean playSoundEffect = true;
+        public boolean playTuffSound = true;
         @Comment("The amount of Brim Powder you will need to build a Boric Campfire.")
         public int howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts = 1;
+    }
+
+    public BoricCampfireBlockConfig BoricCampfire(){
+        if (FabricLoader.getInstance().isModLoaded("byg")){
+            return new BoricCampfireBlockConfig();
+        } else {
+            return null;
+        }
+    }
+    public CrypticCampfireBlockConfig CrypticCampfire(){
+        if (FabricLoader.getInstance().isModLoaded("byg")){
+            return new CrypticCampfireBlockConfig();
+        } else {
+            return null;
+        }
     }
 }
