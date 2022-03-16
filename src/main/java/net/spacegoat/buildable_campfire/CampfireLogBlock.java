@@ -8,6 +8,7 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -28,10 +29,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.spacegoat.buildable_campfire.config.ModConfig;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import potionstudios.byg.common.block.BYGBlocks;
 import potionstudios.byg.common.item.BYGItems;
 
 import java.util.List;
+import java.util.Random;
 
 public class CampfireLogBlock extends Block implements Waterloggable {
 
@@ -48,6 +51,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         this.id = id + "_log";
         this.campfire = campfire;
         this.soulCampfire = soulCampfire;
+        this.setDefaultState(this.getStateManager().getDefaultState().with(WATERLOGGED, false));
     }
 
     public static final IntProperty CAMPFIRE_LOGS = IntProperty.of("campfire_logs", 1,4);
@@ -137,25 +141,49 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         }
         if (state.get(CAMPFIRE_LOGS).equals(4)) {
             if (ModConfig.getConfig().CampfireBlock.enableBuildableCampfire && item.isIn(BuildableCampfire.CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts) {
-                makeCampfire(campfire, ModConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild, ModConfig.getConfig().CampfireBlock.playSoundEffect, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts, world, pos, player, hand);
+                makeCampfire(campfire, ModConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild, ModConfig.getConfig().CampfireBlock.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts, world, pos, player, hand);
+                return ActionResult.SUCCESS;
             }
             if (ModConfig.getConfig().SoulCampfireBlock.enableBuildableSoulCampfire && item.isIn(BuildableCampfire.SOUL_CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts) {
                 if (soulCampfire != null) {
-                    makeCampfire(soulCampfire, ModConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild, ModConfig.getConfig().SoulCampfireBlock.playSoundEffect, SoundEvents.BLOCK_SOUL_SAND_PLACE, ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts, world, pos, player, hand);
+                    makeCampfire(soulCampfire, ModConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild, ModConfig.getConfig().SoulCampfireBlock.playSoulSandSound, SoundEvents.BLOCK_SOUL_SAND_PLACE, ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts, world, pos, player, hand);
+                    return ActionResult.SUCCESS;
                 } else {
                     BuildableCampfire.LOGGER.debug("Soul Campfire for Campfire Log Block returned as 'null', method can't work.");
                 }
             }
             if (ModConfig.getConfig().BoricCampfire.enableBuildableBoricCampfire && item.isOf(BYGItems.BRIM_POWDER) && item.getCount() >= ModConfig.getConfig().BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts){
-                makeCampfire(BYGBlocks.BORIC_CAMPFIRE, ModConfig.getConfig().BoricCampfire.boricCampfireIsLitWhenBuild, ModConfig.getConfig().BoricCampfire.playSoundEffect, SoundEvents.BLOCK_SAND_PLACE, ModConfig.getConfig().BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
+                makeCampfire(BYGBlocks.BORIC_CAMPFIRE, ModConfig.getConfig().BoricCampfire.boricCampfireIsLitWhenBuild, ModConfig.getConfig().BoricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, ModConfig.getConfig().BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
+                return ActionResult.SUCCESS;
             }
             if (ModConfig.getConfig().CrypticCampfire.enableBuildableCrypticCampfire && item.isOf(BYGItems.CRYPTIC_MAGMA_BLOCK) && item.getCount() >= ModConfig.getConfig().CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts){
-                makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, ModConfig.getConfig().CrypticCampfire.crypticCampfireIsLitWhenBuild, ModConfig.getConfig().CrypticCampfire.playSoundEffect, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
+                makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, ModConfig.getConfig().CrypticCampfire.crypticCampfireIsLitWhenBuild, ModConfig.getConfig().CrypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
                 player.playSound(SoundEvents.BLOCK_STONE_HIT, 0.5F, 1);
+                return ActionResult.SUCCESS;
             }
-            return ActionResult.SUCCESS;
+            return ActionResult.PASS;
         }
         return ActionResult.PASS;
+    }
+
+    public void pickLog(PlayerEntity player){
+        BlockState state = this.getDefaultState();
+        if (ModConfig.getConfig().Gameplay.playSoundWhenCampfireLogGetsPicked){
+            player.playSound(state.getSoundGroup().getPlaceSound(), 1, 1);
+        }
+        player.getInventory().insertStack(new ItemStack(this.asItem()));
+    }
+
+    public void makeCampfire(Block campfire, boolean lit, boolean playSound, SoundEvent sound, int cost, World world, BlockPos pos, PlayerEntity player, Hand hand){
+        BlockState state = campfire.getDefaultState().with(CampfireBlock.WATERLOGGED, isNearWater(world, pos)).with(CampfireBlock.FACING, facing(world.getBlockState(pos)));
+        ItemStack item = player.getStackInHand(hand);
+        world.setBlockState(pos, state.with(CampfireBlock.LIT, lit));
+        if (playSound) {
+            player.playSound(sound, 1, 1);
+        }
+        if (!player.isCreative()) {
+            item.decrement(cost);
+        }
     }
 
     @Override
@@ -231,46 +259,52 @@ public class CampfireLogBlock extends Block implements Waterloggable {
 
     public static class HorizontalShapes {
         public static final VoxelShape ONE_EAST_LOG = createCuboidShape(
-                0, 0, 11, 16, 4, 15);
+                0, 0, 11, 16, 4, 15
+        );
         public static final VoxelShape ONE_WEST_LOG = createCuboidShape(
-                0, 0, 1, 16, 4, 5);
-
+                0, 0, 1, 16, 4, 5
+        );
         public static final VoxelShape HORIZONTAL_TWO_LOGS = VoxelShapes.union(
                 ONE_WEST_LOG,
-                ONE_EAST_LOG);
-
+                ONE_EAST_LOG
+        );
         public static final VoxelShape THREE_EAST_LOGS = VoxelShapes.union(
                 HORIZONTAL_TWO_LOGS,
-                createCuboidShape(11, 3, 0, 15, 7, 16));
+                createCuboidShape(11, 3, 0, 15, 7, 16)
+        );
         public static final VoxelShape THREE_WEST_LOGS = VoxelShapes.union(
                 HORIZONTAL_TWO_LOGS,
-                createCuboidShape(1, 3, 0, 5, 7, 16));
-
+                createCuboidShape(1, 3, 0, 5, 7, 16)
+        );
         public static final VoxelShape HORIZONTAL_FOUR_LOGS = VoxelShapes.union(
                 THREE_WEST_LOGS,
-                THREE_EAST_LOGS);
+                THREE_EAST_LOGS
+        );
     }
 
     public static class VerticalShapes {
         public static final VoxelShape ONE_NORTH_LOG = createCuboidShape(
-                1, 0, 0, 5, 4, 16);
+                1, 0, 0, 5, 4, 16
+        );
         public static final VoxelShape ONE_SOUTH_LOG = createCuboidShape(
-                11, 0, 0, 15, 4, 16);
-
+                11, 0, 0, 15, 4, 16
+        );
         public static final VoxelShape TWO_VERTICAL_LOGS = VoxelShapes.union(
                 ONE_NORTH_LOG,
-                ONE_SOUTH_LOG);
-
+                ONE_SOUTH_LOG
+        );
         public static final VoxelShape THREE_NORTH_LOGS = VoxelShapes.union(
                 TWO_VERTICAL_LOGS,
-                createCuboidShape(0, 3, 11, 16, 7, 15));
+                createCuboidShape(0, 3, 11, 16, 7, 15)
+        );
         public static final VoxelShape THREE_SOUTH_LOGS = VoxelShapes.union(
                 TWO_VERTICAL_LOGS,
-                createCuboidShape(0, 3, 1, 16, 7, 5));
-
+                createCuboidShape(0, 3, 1, 16, 7, 5)
+        );
         public static final VoxelShape FOUR_VERTICAL_LOGS = VoxelShapes.union(
                 THREE_NORTH_LOGS,
-                THREE_SOUTH_LOGS);
+                THREE_SOUTH_LOGS
+        );
     }
 
     public Direction facing(BlockState state){
@@ -289,25 +323,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         return null;
     }
 
-    public void pickLog(PlayerEntity player){
-        BlockState state = this.getDefaultState();
-        if (ModConfig.getConfig().Gameplay.playSoundWhenCampfireLogGetsPicked){
-            player.playSound(state.getSoundGroup().getPlaceSound(), 1, 1);
-        }
-        player.getInventory().insertStack(new ItemStack(this.asItem()));
-    }
 
-    public void makeCampfire(Block campfire, boolean lit, boolean playSound, SoundEvent sound, int cost, World world, BlockPos pos, PlayerEntity player, Hand hand){
-        BlockState state = campfire.getDefaultState().with(CampfireBlock.WATERLOGGED, isNearWater(world, pos)).with(CampfireBlock.FACING, facing(world.getBlockState(pos)));
-        ItemStack item = player.getStackInHand(hand);
-        world.setBlockState(pos, state.with(CampfireBlock.LIT, lit));
-        if (playSound) {
-            player.playSound(sound, 1, 1);
-        }
-        if (!player.isCreative()) {
-            item.decrement(cost);
-        }
-    }
 
     public static boolean isNearWater(WorldView world, BlockPos pos){
         BlockState upState = world.getBlockState(pos.up());
