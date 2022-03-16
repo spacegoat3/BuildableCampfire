@@ -14,6 +14,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.spacegoat.buildable_campfire.BuildableCampfireTags;
 import net.spacegoat.buildable_campfire.CampfireLogBlock;
 import net.spacegoat.buildable_campfire.CampfireLogs;
 import net.spacegoat.buildable_campfire.config.ModConfig;
@@ -50,15 +51,13 @@ public class AxeMixin {
     }
 
     private boolean isLog(BlockState state){
-        return state.isIn(BlockTags.LOGS);
+        return state.isIn(BlockTags.LOGS) || state.isIn(BuildableCampfireTags.BYG_LOGS);
     }
 
     private void damage(int damage, ItemUsageContext context) {
         PlayerEntity player = context.getPlayer();
         if (player != null) {
-            context.getStack().damage(damage, player, (p) -> {
-                p.sendToolBreakStatus(context.getHand());
-            });
+            context.getStack().damage(damage, player, (p) -> p.sendToolBreakStatus(context.getHand()));
         }
     }
 
