@@ -35,7 +35,7 @@ public class AxeMixin {
         if (player != null) {
             if (ModConfig.getConfig().Gameplay.enableLogChopping && isLog(state) && player.getPose().equals(EntityPose.CROUCHING)) {
                 world.breakBlock(pos, false, player);
-                Block.dropStack(world, pos, new ItemStack(CampfireLogs.CAMPFIRE_LOG.asItem(), world.getRandom().nextInt(1, 3)));
+                Block.dropStack(world, pos, new ItemStack(CampfireLogs.CAMPFIRE_LOG.asItem(), world.getRandom().nextInt(1, 4)));
                 damage(15, context);
                 info.setReturnValue(ActionResult.SUCCESS);
             }
