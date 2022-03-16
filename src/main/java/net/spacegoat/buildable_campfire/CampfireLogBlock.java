@@ -8,7 +8,6 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -29,12 +28,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.spacegoat.buildable_campfire.config.ModConfig;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import potionstudios.byg.common.block.BYGBlocks;
 import potionstudios.byg.common.item.BYGItems;
 
 import java.util.List;
-import java.util.Random;
 
 public class CampfireLogBlock extends Block implements Waterloggable {
 
@@ -152,12 +149,12 @@ public class CampfireLogBlock extends Block implements Waterloggable {
                     BuildableCampfire.LOGGER.debug("Soul Campfire for Campfire Log Block returned as 'null', method can't work.");
                 }
             }
-            if (ModConfig.getConfig().BoricCampfire.enableBuildableBoricCampfire && item.isOf(BYGItems.BRIM_POWDER) && item.getCount() >= ModConfig.getConfig().BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts){
-                makeCampfire(BYGBlocks.BORIC_CAMPFIRE, ModConfig.getConfig().BoricCampfire.boricCampfireIsLitWhenBuild, ModConfig.getConfig().BoricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, ModConfig.getConfig().BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
+            if (ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.enableBuildableBoricCampfire && item.isOf(BYGItems.BRIM_POWDER) && item.getCount() >= ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts){
+                makeCampfire(BYGBlocks.BORIC_CAMPFIRE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.boricCampfireIsLitWhenBuild, ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
                 return ActionResult.SUCCESS;
             }
-            if (ModConfig.getConfig().CrypticCampfire.enableBuildableCrypticCampfire && item.isOf(BYGItems.CRYPTIC_MAGMA_BLOCK) && item.getCount() >= ModConfig.getConfig().CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts){
-                makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, ModConfig.getConfig().CrypticCampfire.crypticCampfireIsLitWhenBuild, ModConfig.getConfig().CrypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
+            if (ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.enableBuildableCrypticCampfire && item.isOf(BYGItems.CRYPTIC_MAGMA_BLOCK) && item.getCount() >= ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts){
+                makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.crypticCampfireIsLitWhenBuild, ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
                 player.playSound(SoundEvents.BLOCK_STONE_HIT, 0.5F, 1);
                 return ActionResult.SUCCESS;
             }

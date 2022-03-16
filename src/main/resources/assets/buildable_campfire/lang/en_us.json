@@ -35,15 +35,18 @@
   "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts": "Soul Sand Cost",
   "text.autoconfig.buildable_campfire.option.SoulCampfireBlock.playSoulSandSound": "Play Soul Sand Sound",
 
-  "text.autoconfig.buildable_campfire.category.boric_campfire_block": "Boric Campfire",
-  "text.autoconfig.buildable_campfire.option.BoricCampfire.enableBuildableBoricCampfire": "Buildable Boric Campfire",
-  "text.autoconfig.buildable_campfire.option.BoricCampfire.boricCampfireIsLitWhenBuild": "Final Block State",
-  "text.autoconfig.buildable_campfire.option.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts": "Brim Powder Cost",
-  "text.autoconfig.buildable_campfire.option.BoricCampfire.playSandSound": "Play Sand Sound",
+  "text.autoconfig.buildable_campfire.category.modded_campfires": "Modded Campfires",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires": "Oh The Biomes You'll Go Campfires",
 
-  "text.autoconfig.buildable_campfire.category.cryptic_campfire_block": "Cryptic Campfire",
-  "text.autoconfig.buildable_campfire.option.CrypticCampfire.enableBuildableCrypticCampfire": "Buildable Cryptic Campfire",
-  "text.autoconfig.buildable_campfire.option.CrypticCampfire.crypticCampfireIsLitWhenBuild": "Final Block State",
-  "text.autoconfig.buildable_campfire.option.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts": "Cryptic Magma Block Cost",
-  "text.autoconfig.buildable_campfire.option.CrypticCampfire.playTuffSound": "Play Tuff Sound"
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.BoricCampfire": "Boric Campfire",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.BoricCampfire.enableBuildableBoricCampfire": "Buildable Boric Campfire",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.BoricCampfire.boricCampfireIsLitWhenBuild": "Final Block State",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts": "Brim Powder Cost",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.BoricCampfire.playSandSound": "Play Sand Sound",
+
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.CrypticCampfire": "Cryptic Campfire",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.CrypticCampfire.enableBuildableCrypticCampfire": "Buildable Cryptic Campfire",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.CrypticCampfire.crypticCampfireIsLitWhenBuild": "Final Block State",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts": "Cryptic Magma Block Cost",
+  "text.autoconfig.buildable_campfire.option.ModdedCampfires.BYGCampfires.CrypticCampfire.playTuffSound": "Play Tuff Sound"
 }

@@ -81,45 +81,45 @@ public class ModConfig implements ConfigData {
         @Comment("The amount of Soul Sand you will need to build a Soul Campfire.")
         public int howMuchSoulSandBuildingASoulCampfireCosts = 1;
     }
-    @ConfigEntry.Gui.TransitiveObject
-    @ConfigEntry.Category("boric_campfire_block")
-    public BoricCampfireBlockConfig BoricCampfire = BoricCampfire();
-    public static class BoricCampfireBlockConfig {
-        @Comment("Oh The Biomes You'll Go - Green Smoked Campfire")
-        public boolean enableBuildableBoricCampfire = true;
-        @Comment("Should your Boric Campfire be lit when you build it?")
-        public boolean boricCampfireIsLitWhenBuild = false;
-        @Comment("Plays a sound effect when you right-click a finished Campfire Template with Brim Powder.")
-        public boolean playSandSound = true;
-        @Comment("The amount of Brim Powder you will need to build a Boric Campfire.")
-        public int howMuchBrimPowderBuildingABoricCampfireCosts = 1;
-    }
-    @ConfigEntry.Gui.TransitiveObject
-    @ConfigEntry.Category("cryptic_campfire_block")
-    public CrypticCampfireBlockConfig CrypticCampfire = CrypticCampfire();
-    public static class CrypticCampfireBlockConfig {
-        @Comment("Oh The Biomes You'll Go - Green Smoked Campfire")
-        public boolean enableBuildableCrypticCampfire = true;
-        @Comment("Should your Boric Campfire be lit when you build it?")
-        public boolean crypticCampfireIsLitWhenBuild = false;
-        @Comment("Plays a sound effect when you right-click a finished Campfire Template with Brim Powder.")
-        public boolean playTuffSound = true;
-        @Comment("The amount of Brim Powder you will need to build a Boric Campfire.")
-        public int howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts = 1;
-    }
 
-    public BoricCampfireBlockConfig BoricCampfire(){
-        if (FabricLoader.getInstance().isModLoaded("byg")){
-            return new BoricCampfireBlockConfig();
-        } else {
-            return null;
-        }
-    }
-    public CrypticCampfireBlockConfig CrypticCampfire(){
-        if (FabricLoader.getInstance().isModLoaded("byg")){
-            return new CrypticCampfireBlockConfig();
-        } else {
-            return null;
+    @ConfigEntry.Gui.TransitiveObject
+    @ConfigEntry.Category("modded_campfires")
+    public ModdedCampfiresConfig ModdedCampfires = new ModdedCampfiresConfig();
+    public static class ModdedCampfiresConfig {
+        @ConfigEntry.Gui.CollapsibleObject
+        @ConfigEntry.Category("byg_campfires")
+        public BYGCampfiresConfig BYGCampfires = new BYGCampfiresConfig();
+
+        public static class BYGCampfiresConfig {
+            @ConfigEntry.Gui.CollapsibleObject
+            @ConfigEntry.Category("boric_campfire_block")
+            public BoricCampfireBlockConfig BoricCampfire = new BoricCampfireBlockConfig();
+
+            public static class BoricCampfireBlockConfig {
+                @Comment("Oh The Biomes You'll Go - Green Smoked Campfire")
+                public boolean enableBuildableBoricCampfire = true;
+                @Comment("Should your Boric Campfire be lit when you build it?")
+                public boolean boricCampfireIsLitWhenBuild = false;
+                @Comment("Plays a sound effect when you right-click a finished Campfire Template with Brim Powder.")
+                public boolean playSandSound = true;
+                @Comment("The amount of Brim Powder you will need to build a Boric Campfire.")
+                public int howMuchBrimPowderBuildingABoricCampfireCosts = 1;
+            }
+
+            @ConfigEntry.Gui.CollapsibleObject
+            @ConfigEntry.Category("cryptic_campfire_block")
+            public CrypticCampfireBlockConfig CrypticCampfire = new CrypticCampfireBlockConfig();
+
+            public static class CrypticCampfireBlockConfig {
+                @Comment("Oh The Biomes You'll Go - Green Smoked Campfire")
+                public boolean enableBuildableCrypticCampfire = true;
+                @Comment("Should your Boric Campfire be lit when you build it?")
+                public boolean crypticCampfireIsLitWhenBuild = false;
+                @Comment("Plays a sound effect when you right-click a finished Campfire Template with Brim Powder.")
+                public boolean playTuffSound = true;
+                @Comment("The amount of Brim Powder you will need to build a Boric Campfire.")
+                public int howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts = 1;
+            }
         }
     }
 }
