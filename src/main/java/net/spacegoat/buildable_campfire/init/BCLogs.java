@@ -1,4 +1,4 @@
-package net.spacegoat.buildable_campfire;
+package net.spacegoat.buildable_campfire.init;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -10,18 +10,19 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.spacegoat.buildable_campfire.config.ModConfig;
+import net.spacegoat.buildable_campfire.BuildableCampfire;
+import net.spacegoat.buildable_campfire.CampfireLogBlock;
+import net.spacegoat.buildable_campfire.config.BCConfig;
 
-public class CampfireLogs {
+public class BCLogs {
     private static final FabricBlockSettings CAMPFIRE_LOG_SETTINGS = FabricBlockSettings.of(Material.WOOD).strength(Blocks.CAMPFIRE.getHardness())
-            .sounds(BlockSoundGroup.WOOD).luminance(ModConfig.getConfig().Gameplay.campfireLogLuminance);
-
+            .sounds(BlockSoundGroup.WOOD).luminance(BCConfig.getConfig().Gameplay.campfireLogLuminance);
     public static final CampfireLogBlock CAMPFIRE_LOG = createCampfireLog
             ("campfire", Blocks.CAMPFIRE, Blocks.SOUL_CAMPFIRE, CAMPFIRE_LOG_SETTINGS);
 
     private static CampfireLogBlock createCampfireLog(String id, Block campfire, Block soulCampfire, FabricBlockSettings settings){
         return new CampfireLogBlock(id, campfire, soulCampfire, FabricBlockSettings.of(Material.WOOD).strength(Blocks.CAMPFIRE.getHardness())
-                .sounds(BlockSoundGroup.WOOD).luminance(ModConfig.getConfig().Gameplay.campfireLogLuminance));
+                .sounds(BlockSoundGroup.WOOD).luminance(BCConfig.getConfig().Gameplay.campfireLogLuminance));
     }
 
     public static void registerCampfireLogs(){
