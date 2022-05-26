@@ -11,9 +11,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.spacegoat.buildable_campfire.CampfireLogBlock;
+import net.spacegoat.buildable_campfire.BuildableCampfire;
+import net.spacegoat.buildable_campfire.common.CampfireLogBlock;
 import net.spacegoat.buildable_campfire.config.BCConfig;
-import net.spacegoat.buildable_campfire.init.BCLogs;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,7 +28,7 @@ public class AxeMixin {
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
         BlockState state = world.getBlockState(pos);
-        if (state.isOf(BCLogs.CAMPFIRE_LOG) && BCConfig.getConfig().Gameplay.enableCampfireLogChopping) {
+        if (state.isOf(BuildableCampfire.CAMPFIRE_LOG) && BCConfig.getConfig().Gameplay.enableCampfireLogChopping) {
             if (state.get(CampfireLogBlock.CAMPFIRE_LOGS).equals(1)){
                 world.removeBlock(pos, false);
             } else {
