@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import net.spacegoat.buildable_campfire.config.BCConfig;
-import net.spacegoat.buildable_campfire.init.BCBlocks;
+import net.spacegoat.buildable_campfire.init.BCLogs;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +16,7 @@ public class BuildableCampfire implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		BCBlocks.registerCampfireLogs();
+		BCLogs.registerCampfireLogs();
 		this.registerPacks();
 	}
 
