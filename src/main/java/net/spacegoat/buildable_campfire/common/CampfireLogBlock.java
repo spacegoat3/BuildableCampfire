@@ -1,5 +1,6 @@
-package net.spacegoat.buildable_campfire;
+package net.spacegoat.buildable_campfire.common;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -26,8 +27,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
+import net.spacegoat.buildable_campfire.BuildableCampfire;
 import net.spacegoat.buildable_campfire.config.BCConfig;
-import net.spacegoat.buildable_campfire.init.BCTags;
 import org.jetbrains.annotations.Nullable;
 import potionstudios.byg.common.block.BYGBlocks;
 import potionstudios.byg.common.item.BYGItems;
@@ -44,8 +45,9 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         return this.id;
     }
 
-    public CampfireLogBlock(String id, Block campfire, @Nullable Block soulCampfire, Settings settings) {
-        super(settings.mapColor(campfire.getDefaultMapColor()));
+    public CampfireLogBlock(String id, Block campfire, @Nullable Block soulCampfire, Material material) {
+        super(FabricBlockSettings.of(material).sounds(campfire.getSoundGroup(campfire.getDefaultState()))
+                .strength(campfire.getHardness() - 0.5F));
         this.id = id + "_log";
         this.campfire = campfire;
         this.soulCampfire = soulCampfire;

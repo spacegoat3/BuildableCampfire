@@ -1,4 +1,4 @@
-package net.spacegoat.buildable_campfire.init;
+package net.spacegoat.buildable_campfire.common;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
