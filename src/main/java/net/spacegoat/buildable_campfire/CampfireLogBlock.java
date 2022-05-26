@@ -26,7 +26,8 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
-import net.spacegoat.buildable_campfire.config.ModConfig;
+import net.spacegoat.buildable_campfire.config.BCConfig;
+import net.spacegoat.buildable_campfire.init.BCTags;
 import org.jetbrains.annotations.Nullable;
 import potionstudios.byg.common.block.BYGBlocks;
 import potionstudios.byg.common.item.BYGItems;
@@ -49,6 +50,24 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         this.campfire = campfire;
         this.soulCampfire = soulCampfire;
         this.setDefaultState(this.getStateManager().getDefaultState().with(WATERLOGGED, false));
+    }
+
+    public static BlockState blockState(boolean increasing, BlockState state) {
+        var logs = state.get(CAMPFIRE_LOGS);
+        if (!increasing){
+            switch (logs){
+                case 2 -> state.with(CAMPFIRE_LOGS, 1);
+                case 3 -> state.with(CAMPFIRE_LOGS, 2);
+                case 4 -> state.with(CAMPFIRE_LOGS, 3);
+            }
+        } else {
+            switch (logs){
+                case 1 -> state.with(CAMPFIRE_LOGS, 2);
+                case 2 -> state.with(CAMPFIRE_LOGS, 3);
+                case 3 -> state.with(CAMPFIRE_LOGS, 4);
+            }
+        }
+        return state;
     }
 
     public static final IntProperty CAMPFIRE_LOGS = IntProperty.of("campfire_logs", 1,4);
@@ -113,7 +132,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     public ActionResult onUse(BlockState blockState, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         ItemStack item = player.getMainHandStack();
         BlockState state = blockState.with(WATERLOGGED, isNearWater(world, pos));
-        if (ModConfig.getConfig().Gameplay.campfireLogsArePickable && item.isEmpty() || item.isOf(this.asItem())){
+        if (BCConfig.getConfig().Gameplay.campfireLogsArePickable && item.isEmpty() || item.isOf(this.asItem())){
             if (state.get(CAMPFIRE_LOGS).equals(1)){
                 world.removeBlock(pos, false);
                 pickLog(player);
@@ -137,24 +156,24 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             return ActionResult.SUCCESS;
         }
         if (state.get(CAMPFIRE_LOGS).equals(4)) {
-            if (ModConfig.getConfig().CampfireBlock.enableBuildableCampfire && item.isIn(BuildableCampfireTags.CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts) {
-                makeCampfire(campfire, ModConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild, ModConfig.getConfig().CampfireBlock.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts, world, pos, player, hand);
+            if (BCConfig.getConfig().CampfireBlock.enableBuildableCampfire && item.isIn(BCTags.CAMPFIRE_INGREDIENTS) && item.getCount() >= BCConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts) {
+                makeCampfire(campfire, BCConfig.getConfig().CampfireBlock.campfireIsLitWhenBuild, BCConfig.getConfig().CampfireBlock.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, BCConfig.getConfig().CampfireBlock.howMuchCoalBuildingACampfireCosts, world, pos, player, hand);
                 return ActionResult.SUCCESS;
             }
-            if (ModConfig.getConfig().SoulCampfireBlock.enableBuildableSoulCampfire && item.isIn(BuildableCampfireTags.SOUL_CAMPFIRE_INGREDIENTS) && item.getCount() >= ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts) {
+            if (BCConfig.getConfig().SoulCampfireBlock.enableBuildableSoulCampfire && item.isIn(BCTags.SOUL_CAMPFIRE_INGREDIENTS) && item.getCount() >= BCConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts) {
                 if (soulCampfire != null) {
-                    makeCampfire(soulCampfire, ModConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild, ModConfig.getConfig().SoulCampfireBlock.playSoulSandSound, SoundEvents.BLOCK_SOUL_SAND_PLACE, ModConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts, world, pos, player, hand);
+                    makeCampfire(soulCampfire, BCConfig.getConfig().SoulCampfireBlock.soulCampfireIsLitWhenBuild, BCConfig.getConfig().SoulCampfireBlock.playSoulSandSound, SoundEvents.BLOCK_SOUL_SAND_PLACE, BCConfig.getConfig().SoulCampfireBlock.howMuchSoulSandBuildingASoulCampfireCosts, world, pos, player, hand);
                     return ActionResult.SUCCESS;
                 } else {
                     BuildableCampfire.LOGGER.debug("Soul Campfire for Campfire Log Block returned as 'null', method can't work.");
                 }
             }
-            if (ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.enableBuildableBoricCampfire && item.isOf(BYGItems.BRIM_POWDER) && item.getCount() >= ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts){
-                makeCampfire(BYGBlocks.BORIC_CAMPFIRE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.boricCampfireIsLitWhenBuild, ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
+            if (BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.enableBuildableBoricCampfire && item.isOf(BYGItems.BRIM_POWDER) && item.getCount() >= BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts){
+                makeCampfire(BYGBlocks.BORIC_CAMPFIRE, BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.boricCampfireIsLitWhenBuild, BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
                 return ActionResult.SUCCESS;
             }
-            if (ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.enableBuildableCrypticCampfire && item.isOf(BYGItems.CRYPTIC_MAGMA_BLOCK) && item.getCount() >= ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts){
-                makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.crypticCampfireIsLitWhenBuild, ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, ModConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
+            if (BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.enableBuildableCrypticCampfire && item.isOf(BYGItems.CRYPTIC_MAGMA_BLOCK) && item.getCount() >= BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts){
+                makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.crypticCampfireIsLitWhenBuild, BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
                 player.playSound(SoundEvents.BLOCK_STONE_HIT, 0.5F, 1);
                 return ActionResult.SUCCESS;
             }
@@ -165,7 +184,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
 
     public void pickLog(PlayerEntity player){
         BlockState state = this.getDefaultState();
-        if (ModConfig.getConfig().Gameplay.playSoundWhenCampfireLogGetsPicked){
+        if (BCConfig.getConfig().Gameplay.playSoundWhenCampfireLogGetsPicked){
             player.playSound(state.getSoundGroup().getPlaceSound(), 1, 1);
         }
         player.getInventory().insertStack(new ItemStack(this.asItem()));
@@ -185,11 +204,12 @@ public class CampfireLogBlock extends Block implements Waterloggable {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
-        Formatting color = ModConfig.getConfig().Gameplay.tooltipColor;
-        String text = ModConfig.getConfig().Gameplay.tooltip;
-        if (ModConfig.getConfig().Gameplay.enableItemTooltip){
+        Formatting color = BCConfig.getConfig().Gameplay.tooltipColor;
+        String text = BCConfig.getConfig().Gameplay.tooltip;
+        if (BCConfig.getConfig().Gameplay.enableItemTooltip){
             if (text == null || text.equals("")){
-                tooltip.add(new TranslatableText("text.buildable_campfire.tooltip").formatted(color));
+                tooltip.add(new TranslatableText("text.buildable_campfire.tooltip1").formatted(color));
+                tooltip.add(new TranslatableText("text.buildable_campfire.tooltip2").formatted(color));
             } else {
                 tooltip.add(new LiteralText(text).formatted(color));
                 if (text.equals("easteregg") || text.equals("easter_egg")){

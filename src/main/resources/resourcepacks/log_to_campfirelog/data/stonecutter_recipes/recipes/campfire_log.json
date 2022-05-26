@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "tag": "minecraft:logs_that_burn"
-  },
-  "result": "buildable_campfire:campfire_log",
-  "count": 2
-}

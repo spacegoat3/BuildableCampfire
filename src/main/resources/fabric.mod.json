@@ -23,7 +23,7 @@
       "net.spacegoat.buildable_campfire.BuildableCampfire"
     ],
     "modmenu": [
-      "net.spacegoat.buildable_campfire.config.ModMenuIntegration"
+      "net.spacegoat.buildable_campfire.config.BCMenuIntegration"
     ]
   },
 
@@ -43,9 +43,9 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": ["1.18", "1.18.1"],
+    "minecraft": ["1.18", "1.18.1", "1.18.2"],
     "java": ">=16",
-    "cloth-config2": ">=5.0.34"
+    "cloth-config2": "*"
   },
 
   "suggests": {

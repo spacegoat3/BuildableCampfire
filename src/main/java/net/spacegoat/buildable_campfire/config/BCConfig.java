@@ -6,22 +6,21 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Formatting;
 import net.spacegoat.buildable_campfire.BuildableCampfire;
 
 @Config(name = BuildableCampfire.MOD_ID)
 @Config.Gui.Background("minecraft:textures/block/oak_log.png")
-public class ModConfig implements ConfigData {
+public class BCConfig implements ConfigData {
 
     @ConfigEntry.Gui.Excluded
     private transient static boolean registered = false;
-    public static synchronized ModConfig getConfig() {
+    public static synchronized BCConfig getConfig() {
         if (!registered) {
-            AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
+            AutoConfig.register(BCConfig.class, JanksonConfigSerializer::new);
             registered = true;
         }
-        return AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        return AutoConfig.getConfigHolder(BCConfig.class).getConfig();
     }
 
     @ConfigEntry.Gui.TransitiveObject
@@ -36,9 +35,7 @@ public class ModConfig implements ConfigData {
         public boolean deleteCampfireBlockRecipes = true;
         @Comment("Campfire Logs Block will drop its item form depending on how much log it has.")
         public boolean enableCampfireLogDrops = true;
-        @Comment("Players can gather Campfire Logs by left-clicking log or log-like them with an Axe while crouching.")
-        public boolean enableLogChopping = true;
-        @Comment("Players can turn Campfire Logs into 6 Sticks by left-clicking onto them with an Axe while crouching.")
+        @Comment("Players can turn Campfire Logs into 4 Sticks by left-clicking onto them with an Axe while crouching.")
         public boolean enableCampfireLogChopping = true;
         @ConfigEntry.Gui.RequiresRestart
         @Comment("Players can make a Campfire Log using 6 Sticks.")
@@ -49,7 +46,7 @@ public class ModConfig implements ConfigData {
         @Comment("Shows a text under the item's name explaining the use of the Campfire Log.")
         public boolean enableItemTooltip = true;
         @Comment("The tooltip itself. Leave empty/null if you want it to be default.")
-        public String tooltip = "";
+        public String tooltip = null;
         @Comment("The color of the tooltip text.")
         public Formatting tooltipColor = Formatting.GRAY;
         @Comment("The amount of light Campfire Log gives off to its surroundings.")
