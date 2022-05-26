@@ -26,6 +26,9 @@ repositories {
 	maven {
 		url = "https://maven.minecraftforge.net/"
 	}
+	maven {
+		url 'https://maven.blamejared.com'
+	}
 }
 
 dependencies {
@@ -39,6 +42,7 @@ dependencies {
 	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 	modImplementation "curse.maven:biomes_youll_go-391378:${project.biomes_youll_go_version}"
 	modImplementation "com.github.glitchfiend:TerraBlender-fabric:${project.terra_blender_version}"
+	modImplementation "vazkii.patchouli:Patchouli:${project.patchouli_version}"
 }
 
 processResources {
