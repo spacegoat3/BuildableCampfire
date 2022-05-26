@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(AxeItem.class)
 public class AxeMixin {
 
-    @Inject(method = "useOnBlock", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "useOnBlock", at = @At("TAIL"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void useOnBlockMixin(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir){
         World world = context.getWorld();
         BlockPos pos = context.getBlockPos();
@@ -36,6 +36,7 @@ public class AxeMixin {
             }
             Block.dropStack(world, pos, new ItemStack(Items.STICK, 4));
             world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_AXE_STRIP, SoundCategory.PLAYERS, 1, 1, false);
+            cir.setReturnValue(ActionResult.SUCCESS);
         }
     }
 }
