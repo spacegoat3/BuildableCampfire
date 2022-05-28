@@ -15,8 +15,9 @@ public class BCTags {
             createItemTag("campfire_ingredients");
     public static final TagKey<Item> SOUL_CAMPFIRE_INGREDIENTS =
             createItemTag("soul_campfire_ingredients");
-    public static final TagKey<Block> BYG_LOGS =
-            createBlockTag("byg_logs");
+    public static final TagKey<Block> CAMPFIRES =
+            createBlockTag("campfires");
+
 
     private static TagKey<Item> createItemTag(String id){
         return TagKey.of(Registry.ITEM_KEY, new Identifier(BuildableCampfire.MOD_ID, id));

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:campfire",
+    "minecraft:soul_campfire",
+    "byg:boric_campfire",
+    "byg:cryptic_campfire"
+  ]
+}
