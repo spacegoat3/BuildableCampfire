@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "buildable_campfire:fire_starter_tool"
+  }
+}

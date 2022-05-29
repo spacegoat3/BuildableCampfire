@@ -3,6 +3,7 @@
   "block.buildable_campfire.campfire_log_second": "Firewood",
   "text.buildable_campfire.tooltip1": "Can be placed four times",
   "text.buildable_campfire.tooltip2": "to make a campfire template.",
+  "text.buildable_campfire.fire_start_fail": "You weren't able to start a file.",
 
   "text.buildable_campfire.curseforge": "CurseForge Page",
   "text.buildable_campfire.modrinth": "Modrinth Page",

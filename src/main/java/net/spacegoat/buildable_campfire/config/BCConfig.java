@@ -14,7 +14,7 @@ import net.spacegoat.buildable_campfire.BuildableCampfire;
 public class BCConfig implements ConfigData {
 
     @ConfigEntry.Gui.Excluded
-    private transient static boolean registered = false;
+    private static boolean registered = false;
     public static synchronized BCConfig getConfig() {
         if (!registered) {
             AutoConfig.register(BCConfig.class, JanksonConfigSerializer::new);
@@ -32,7 +32,7 @@ public class BCConfig implements ConfigData {
         public boolean playSoundWhenCampfireLogGetsPicked = true;
         @ConfigEntry.Gui.RequiresRestart
         @Comment("Deletes Campfire and Soul Campfire Blocks' recipes, so players will need to build them instead.")
-        public boolean deleteCampfireBlockRecipes = true;
+        public boolean disableCampfireBlockRecipes = true;
         @Comment("Campfire Logs Block will drop its item form depending on how much log it has.")
         public boolean enableCampfireLogDrops = true;
         @Comment("Players can turn Campfire Logs into 4 Sticks by left-clicking onto them with an Axe while crouching.")
@@ -45,12 +45,14 @@ public class BCConfig implements ConfigData {
         public boolean enableLogToCampfireLogRecipes = true;
         @Comment("Shows a text under the item's name explaining the use of the Campfire Log.")
         public boolean enableItemTooltip = true;
-        @Comment("The tooltip itself. Leave empty/null if you want it to be default.")
-        public String tooltip = null;
-        @Comment("The color of the tooltip text.")
-        public Formatting tooltipColor = Formatting.GRAY;
-        @Comment("The amount of light Campfire Log gives off to its surroundings.")
-        public int campfireLogLuminance = 0;
+        @ConfigEntry.Gui.CollapsibleObject
+        public TooltipConfig tooltipConfig = new TooltipConfig();
+        public static class TooltipConfig {
+            @Comment("The tooltip itself. Leave empty/null if you want it to be default.")
+            public String tooltip = null;
+            @Comment("The color of the tooltip text.")
+            public Formatting tooltipColor = Formatting.GRAY;
+        }
     }
     @ConfigEntry.Gui.TransitiveObject
     @ConfigEntry.Category("campfire_block")
