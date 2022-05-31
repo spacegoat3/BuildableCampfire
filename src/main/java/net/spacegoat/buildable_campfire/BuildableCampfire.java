@@ -1,5 +1,6 @@
 package net.spacegoat.buildable_campfire;
 
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -20,15 +21,14 @@ import org.apache.logging.log4j.Logger;
 
 public class BuildableCampfire implements ModInitializer {
 	public static final String MOD_ID = "buildable_campfire";
-	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
 	public static final Block CAMPFIRE_LOG = new CampfireLogBlock(
 			Blocks.CAMPFIRE, Blocks.SOUL_CAMPFIRE, Material.WOOD);
 
 	@Override
 	public void onInitialize() {
-		this.registerBlock("campfire_log", CAMPFIRE_LOG, new FabricItemSettings().group(ItemGroup.DECORATIONS));
 		this.registerPacks();
+		this.registerBlock("campfire_log", CAMPFIRE_LOG, new FabricItemSettings().group(ItemGroup.DECORATIONS));
 	}
 
 	private void registerBlock(String id, Block block, Item.Settings itemSettings){
@@ -51,7 +51,7 @@ public class BuildableCampfire implements ModInitializer {
 		}
 	}
 
-	private void createPack(String id){
+	public static void createPack(String id){
 		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer ->
 			ResourceManagerHelper.registerBuiltinResourcePack(new Identifier(
 					MOD_ID, id), modContainer, ResourcePackActivationType.DEFAULT_ENABLED));
