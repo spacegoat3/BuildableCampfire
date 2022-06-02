@@ -5,6 +5,5 @@
   "compatibilityLevel": "JAVA_16",
   "mixins": [
     "AxeMixin",
-    "BlockMixin"
   ]
 }
