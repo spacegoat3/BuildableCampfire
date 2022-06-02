@@ -40,14 +40,11 @@ public class BuildableCampfire implements ModInitializer {
 		if (BCConfig.getConfig().Gameplay.disableCampfireBlockRecipes){
 			createPack("no_campfire_recipes");
 		}
-		if (BCConfig.getConfig().Gameplay.enableCampfireLogDrops){
+		if (BCConfig.getConfig().Gameplay.disableModdedCampfireBlockRecipes){
+			createPack("no_modded_campfire_recipes");
+		}
+		if (BCConfig.getConfig().Gameplay.campfireLogDrops){
 			createPack("campfire_log_drops");
-		}
-		if (BCConfig.getConfig().Gameplay.enableLogToCampfireLogRecipes){
-			createPack("log_to_campfirelog");
-		}
-		if (BCConfig.getConfig().Gameplay.enableSticksToLogRecipes){
-			createPack("stick_to_campfirelog");
 		}
 	}
 

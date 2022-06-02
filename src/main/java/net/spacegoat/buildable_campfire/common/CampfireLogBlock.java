@@ -148,16 +148,16 @@ public class CampfireLogBlock extends Block implements Waterloggable {
             BCConfig.SoulCampfireBlockConfig soulCampfire = BCConfig.getConfig().SoulCampfireBlock;
             BCConfig.ModdedCampfiresConfig.BYGCampfiresConfig.BoricCampfireBlockConfig boricCampfire = BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire;
             BCConfig.ModdedCampfiresConfig.BYGCampfiresConfig.CrypticCampfireBlockConfig crypticCampfire = BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire;
-            if (condition(campfire.enableBuildableCampfire, BCTags.CAMPFIRE_INGREDIENTS, campfire.howMuchCoalBuildingACampfireCosts, item)){
+            if (condition(campfire.buildableCampfire, BCTags.CAMPFIRE_INGREDIENTS, campfire.howMuchCoalBuildingACampfireCosts, item)){
                 makeCampfire(Blocks.CAMPFIRE, campfire.campfireIsLitWhenBuild, campfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, campfire.howMuchCoalBuildingACampfireCosts, world, pos, player, hand);
             }
-            if (condition(soulCampfire.enableBuildableSoulCampfire, BCTags.SOUL_CAMPFIRE_INGREDIENTS, soulCampfire.howMuchSoulSandBuildingASoulCampfireCosts, item)){
+            if (condition(soulCampfire.buildableSoulCampfire, BCTags.SOUL_CAMPFIRE_INGREDIENTS, soulCampfire.howMuchSoulSandBuildingASoulCampfireCosts, item)){
                 makeCampfire(Blocks.SOUL_CAMPFIRE, soulCampfire.soulCampfireIsLitWhenBuild, soulCampfire.playSoulSandSound, SoundEvents.BLOCK_SOUL_SAND_PLACE, soulCampfire.howMuchSoulSandBuildingASoulCampfireCosts, world, pos, player, hand);
             }
-            if (condition(boricCampfire.enableBuildableBoricCampfire, BYGItems.BRIM_POWDER, boricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, item)){
+            if (condition(boricCampfire.buildableBoricCampfire, BYGItems.BRIM_POWDER, boricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, item)){
                 makeCampfire(BYGBlocks.BORIC_CAMPFIRE, boricCampfire.boricCampfireIsLitWhenBuild, boricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, boricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
             }
-            if (condition(crypticCampfire.enableBuildableCrypticCampfire, BYGItems.CRYPTIC_MAGMA_BLOCK.asItem(), crypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, item)){
+            if (condition(crypticCampfire.buildableCrypticCampfire, BYGItems.CRYPTIC_MAGMA_BLOCK.asItem(), crypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, item)){
                 makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, crypticCampfire.crypticCampfireIsLitWhenBuild, crypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, crypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
             }
             return ActionResult.SUCCESS;
@@ -196,7 +196,7 @@ public class CampfireLogBlock extends Block implements Waterloggable {
     public void appendTooltip(ItemStack stack, @Nullable BlockView world, List<Text> tooltip, TooltipContext options) {
         Formatting color = BCConfig.getConfig().Gameplay.tooltipConfig.tooltipColor;
         String text = BCConfig.getConfig().Gameplay.tooltipConfig.tooltip;
-        if (BCConfig.getConfig().Gameplay.enableItemTooltip){
+        if (BCConfig.getConfig().Gameplay.itemTooltip){
             if (text == null || text.equals("")){
                 tooltip.add(new TranslatableText("text.buildable_campfire.tooltip1").formatted(color));
                 tooltip.add(new TranslatableText("text.buildable_campfire.tooltip2").formatted(color));
