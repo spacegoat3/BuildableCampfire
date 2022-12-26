@@ -11,7 +11,6 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -33,7 +32,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.spacegoat.buildable_campfire.config.BCConfig;
 import org.jetbrains.annotations.Nullable;
-import potionstudios.byg.BYG;
 import potionstudios.byg.common.block.BYGBlocks;
 import potionstudios.byg.common.item.BYGItems;
 
@@ -146,19 +144,21 @@ public class CampfireLogBlock extends Block implements Waterloggable {
         if (state.get(CAMPFIRE_LOGS).equals(4)){
             BCConfig.CampfireBlockConfig campfire = BCConfig.getConfig().CampfireBlock;
             BCConfig.SoulCampfireBlockConfig soulCampfire = BCConfig.getConfig().SoulCampfireBlock;
-            BCConfig.ModdedCampfiresConfig.BYGCampfiresConfig.BoricCampfireBlockConfig boricCampfire = BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire;
-            BCConfig.ModdedCampfiresConfig.BYGCampfiresConfig.CrypticCampfireBlockConfig crypticCampfire = BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire;
             if (condition(campfire.buildableCampfire, BCTags.CAMPFIRE_INGREDIENTS, campfire.howMuchCoalBuildingACampfireCosts, item)){
                 makeCampfire(Blocks.CAMPFIRE, campfire.campfireIsLitWhenBuild, campfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, campfire.howMuchCoalBuildingACampfireCosts, world, pos, player, hand);
             }
             if (condition(soulCampfire.buildableSoulCampfire, BCTags.SOUL_CAMPFIRE_INGREDIENTS, soulCampfire.howMuchSoulSandBuildingASoulCampfireCosts, item)){
                 makeCampfire(Blocks.SOUL_CAMPFIRE, soulCampfire.soulCampfireIsLitWhenBuild, soulCampfire.playSoulSandSound, SoundEvents.BLOCK_SOUL_SAND_PLACE, soulCampfire.howMuchSoulSandBuildingASoulCampfireCosts, world, pos, player, hand);
             }
-            if (condition(boricCampfire.buildableBoricCampfire, BYGItems.BRIM_POWDER, boricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, item)){
-                makeCampfire(BYGBlocks.BORIC_CAMPFIRE, boricCampfire.boricCampfireIsLitWhenBuild, boricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, boricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
-            }
-            if (condition(crypticCampfire.buildableCrypticCampfire, BYGItems.CRYPTIC_MAGMA_BLOCK.asItem(), crypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, item)){
-                makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, crypticCampfire.crypticCampfireIsLitWhenBuild, crypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, crypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
+            if (FabricLoader.getInstance().isModLoaded("byg")) {
+                BCConfig.ModdedCampfiresConfig.BYGCampfiresConfig.BoricCampfireBlockConfig boricCampfire = BCConfig.getConfig().ModdedCampfires.BYGCampfires.BoricCampfire;
+                BCConfig.ModdedCampfiresConfig.BYGCampfiresConfig.CrypticCampfireBlockConfig crypticCampfire = BCConfig.getConfig().ModdedCampfires.BYGCampfires.CrypticCampfire;
+                if (condition(boricCampfire.buildableBoricCampfire, BYGItems.BRIM_POWDER, boricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, item)) {
+                    makeCampfire(BYGBlocks.BORIC_CAMPFIRE, boricCampfire.boricCampfireIsLitWhenBuild, boricCampfire.playSandSound, SoundEvents.BLOCK_SAND_PLACE, boricCampfire.howMuchBrimPowderBuildingABoricCampfireCosts, world, pos, player, hand);
+                }
+                if (condition(crypticCampfire.buildableCrypticCampfire, BYGItems.CRYPTIC_MAGMA_BLOCK.asItem(), crypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, item)) {
+                    makeCampfire(BYGBlocks.CRYPTIC_CAMPFIRE, crypticCampfire.crypticCampfireIsLitWhenBuild, crypticCampfire.playTuffSound, SoundEvents.BLOCK_TUFF_PLACE, crypticCampfire.howMuchCrypticMagmaBlockBuildingACrypticCampfireCosts, world, pos, player, hand);
+                }
             }
             return ActionResult.SUCCESS;
         }
